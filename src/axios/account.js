@@ -1,6 +1,6 @@
 // src/api/auth.js (hoặc wherever you keep API functions)
 
-import axiosInstance from './platform.api'; // file axios đã cấu hình
+import axiosInstance from './platform.js'; // file axios đã cấu hình
 
 // Hàm login, truyền vào username & password
 export const login = async (username, password) => {

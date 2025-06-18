@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-import { login } from '../api/auth';
+import { login } from "../axios/account";
 export default function LoginForm() {
   const [showError, setShowError] = useState(true);
 const navigate = useNavigate();
