@@ -106,7 +106,6 @@ const navigate = useNavigate();
               >
               Sign in
               </button>
-              <Link to="/employee" className="text-blue-600 underline">Sign in</Link>
             </div>
           </form>
 
