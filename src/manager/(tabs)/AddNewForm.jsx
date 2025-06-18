@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { Toaster } from 'react-hot-toast'
 import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
+import { FaUserPlus  } from "react-icons/fa";
 import { ChevronDownIcon } from '@heroicons/react/16/solid'
 import { add } from '../../axios/account'
 import { useNavigate } from 'react-router-dom'

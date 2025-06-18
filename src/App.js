@@ -6,7 +6,11 @@ import AddNewForm from './manager/(tabs)/AddNewForm';
 import Unauthorized from './pages/Unauthorized';
 import AuthManager from './middleware/authManager';
 import ListEmployeeDashBoard from './manager/(tabs)/ListEmployee';
-import Home from './Home';
+import RequestDayoff from './employee/(tabs)/RequestDayoff';
+import ViewDayoffList from './employee/(tabs)/ViewDayoffList';
+import EmployeePage from './employee/EmployeePage';
+import EmployeeInfo from './employee/(tabs)/EmployeeInfo';
+import Home from './Home'; // giả sử có trang chính
 import "./global.css"
 function App() {
   return (
@@ -14,6 +18,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home /> } />
         <Route path="/login" element={<LoginForm />} />
+
          <Route path="/unauthorized" element={<Unauthorized />} />
         <Route path="/manager" element={
           // <AuthManager>
@@ -24,8 +29,13 @@ function App() {
           <Route path="addnew" element={<AddNewForm />} />
           {/* <Route path="list" element={<ListEmployee />} />
           <Route path="stats" element={<Statistics />} /> */}
-        </Route>
         
+        </Route>
+         <Route path="/employee" element={<EmployeePage />}>
+          <Route index element={<EmployeeInfo />} />
+          <Route path="request" element={<RequestDayoff />} />
+          <Route path="list" element={<ViewDayoffList />} />
+        </Route>
       </Routes>
     </Router>
   );

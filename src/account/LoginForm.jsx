@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from 'react-router-dom';import { useNavigate } from "react-router-dom";
 import { login } from "../axios/account";
 export default function LoginForm() {
   const [showError, setShowError] = useState(false);
@@ -104,8 +104,9 @@ const navigate = useNavigate();
                 type="submit"
                 className="w-full flex justify-center rounded-md bg-indigo-600 px-4 py-3 text-lg font-semibold text-white hover:bg-indigo-500"
               >
-                Sign in
+              Sign in
               </button>
+              <Link to="/employee" className="text-blue-600 underline">Sign in</Link>
             </div>
           </form>
 
