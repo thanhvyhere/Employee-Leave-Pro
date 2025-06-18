@@ -16,9 +16,10 @@ export default function ViewDayoffList() {
       setLoading(false);
     };
     fetchRequests();
-  }, []);
+  }, [selectedStatus]);
 
   const filteredRequests = requests.filter(req => req.status === selectedStatus);
+  console.log(filteredRequests);
 
   return (
     <div>

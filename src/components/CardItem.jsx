@@ -4,15 +4,15 @@ import React from 'react';
 
 const CardItem = ({ reason, requestedDate, rejectedDate, status }) => {
   const statusColor = {
-    Pending: "text-yellow-500",
-    Accepted: "text-green-500",
-    Rejected: "text-[#FF4A4D]",
+    pending: "text-yellow-500",
+    approved: "text-green-500",
+    rejected: "text-[#FF4A4D]",
   };
 
   const statusTitle = {
-    Pending: "Pending",
-    Accepted: "Accepted",
-    Rejected: "Rejected",
+    pending: "Pending",
+    approved: "Approved",
+    rejected: "Rejected",
   };
 
   return (
