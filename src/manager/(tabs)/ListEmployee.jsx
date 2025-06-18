@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 export default function ListEmployee() {
-    const navigator = useNavigate();
+  const navigator = useNavigate();
+
   const [employees, setEmployees] = useState([
     {
       id: 1,
@@ -53,7 +55,7 @@ export default function ListEmployee() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleAddUser = () => {
-    navigator('/manager/addnew')
+    navigator("/manager/addnew");
   };
 
   const handleDeleteSelected = () => {
@@ -143,9 +145,10 @@ export default function ListEmployee() {
           <tr>
             <th className="p-4">No.</th>
             <th className="px-6 py-3 text-left">Name</th>
-            <th className="px-6 py-3">Gender</th>
+            {/* <th className="px-6 py-3">Gender</th> */}
             <th className="px-6 py-3">Status</th>
             <th className="px-6 py-3">Leave Days</th>
+            <th className="px-6 py-3">Remaining Days</th>
             <th className="px-6 py-3">Action</th>
           </tr>
         </thead>
@@ -165,12 +168,12 @@ export default function ListEmployee() {
                   src={emp.avatar}
                   alt={emp.name}
                 />
-                <div className="ps-3">
+                <div className="ps-3 text-left">
                   <div className="text-base font-semibold">{emp.name}</div>
                   <div className="font-normal text-gray-500">{emp.email}</div>
                 </div>
               </th>
-              <td className="px-6 py-4">{emp.gender}</td>
+              {/* <td className="px-6 py-4">{emp.gender}</td> */}
               <td className="px-6 py-4">
                 <button
                   className={`px-3 py-1 text-xs font-medium rounded-full flex items-center justify-center mx-auto gap-2 ${
@@ -190,6 +193,7 @@ export default function ListEmployee() {
               <td className="px-6 py-4 whitespace-pre-line">
                 {emp.leaveDays.length > 0 ? emp.leaveDays.join("\n") : "—"}
               </td>
+              <td className="px-6 py-4">{emp.leaveDays.length}</td>
               <td className="px-6 py-4">
                 <a
                   href="#"

@@ -1,14 +1,17 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { Toaster } from 'react-hot-toast'
 import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
 import { ChevronDownIcon } from '@heroicons/react/16/solid'
 import { add } from '../../axios/account'
+import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-hot-toast'
 export default function AddNewForm() {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [name, setName] = useState('')
+  const navigate = useNavigate();
 
   // Tự động cập nhật tên đầy đủ
   useEffect(() => {
@@ -29,16 +32,19 @@ const handleSubmit = async (e) => {
   }
 
   try {
-    await add(username, `${lastName} ${firstName}`, email)
-    toast.success('Successful')
-    form.reset()
-  } catch (error) {
-    console.error(error)
-    toast.error('Failed')
-  }
+  await add(username, `${lastName} ${firstName}`, email)
+  toast.success('Successful')
+  form.reset()
+  navigate('/manager/list') // ⬅️ CHUYỂN HƯỚNG SAU KHI ADD
+} catch (error) {
+  console.error(error)
+  toast.error('Failed')
+}
+
 }
 
   return (
+    
     <form onSubmit={handleSubmit}>
       <input type="hidden" name="name" value={name} />
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import { FaUserEdit, FaPodcast, FaBroadcastTower } from "react-icons/fa";
-
+import { Toaster } from 'react-hot-toast'
 export default function ManagerLayout() {
   const tabClasses = ({ isActive }) =>
     `flex items-center gap-2 text-sm font-medium px-4 py-2 border-r border-gray-300 transition ${
@@ -11,6 +11,8 @@ export default function ManagerLayout() {
     }`;
 
   return (
+     <React.Fragment>
+    <Toaster position="top-right" />
     <div className="mx-[10%] my-8">
       <h1 className="text-2xl font-bold mb-6">Manager Dashboard</h1>
 
@@ -30,5 +32,7 @@ export default function ManagerLayout() {
         <Outlet />
       </div>
     </div>
+    </React.Fragment>
   );
+  
 }
