@@ -20,7 +20,7 @@ export default function RequestDayoff({ employee, totalDays, remainingDays, onRe
     <div className="">
       {/* Header */}
       <div className="bg-blue-100 text-center py-3 rounded mb-6">
-        <h1 className="text-[#13467E] font-semibold text-lg">Request Day Off</h1>
+        <h1 className="text-[#13467E] font-semibold text-lg">Request Day Off Form</h1>
       </div>
 
       {/* Calendar */}
