@@ -2,7 +2,6 @@
 
 import axiosInstance from './platform.js'; // file axios đã cấu hình
 
-// Hàm login, truyền vào username & password
 export const login = async (username, password) => {
   try {
     const res = await axiosInstance.post('/login', {
@@ -10,10 +9,8 @@ export const login = async (username, password) => {
       password,
     });
 
-    
     const { token, role } = res.data;
     localStorage.setItem("token", token); 
-    console.log("hello" + token);
     
     return { token, role };
   } catch (err) {
