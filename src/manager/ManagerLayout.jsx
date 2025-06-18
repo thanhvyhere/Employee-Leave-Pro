@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 import { FaUserEdit, FaPodcast, FaBroadcastTower } from "react-icons/fa";
 
 export default function ManagerLayout() {
-  const [activeTab, setActiveTab] = useState("add");
+  const [activeTab, setActiveTab] = useState("list");
 
   const tabClasses = (tab) =>
     `flex items-center gap-2 text-sm font-medium px-4 py-2 border-r border-gray-300 transition ${
@@ -17,8 +17,8 @@ export default function ManagerLayout() {
       <h1 className="text-2xl font-bold mb-6">Manager Dashboard</h1>
 
       <div className="inline-flex shadow-sm rounded-md overflow-hidden border border-gray-300 mb-6">
-        <button onClick={() => setActiveTab("add")} className={tabClasses("add")}>
-          <FaUserEdit /> Add New
+        <button onClick={() => setActiveTab("list")} className={tabClasses("list")}>
+          <FaUserEdit /> List Employee
         </button>
         <button onClick={() => setActiveTab("podcasts")} className={tabClasses("podcasts")}>
           <FaPodcast /> Podcasts
