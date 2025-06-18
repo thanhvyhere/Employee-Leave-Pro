@@ -16,12 +16,12 @@ function App() {
         <Route path="/login" element={<LoginForm />} />
          <Route path="/unauthorized" element={<Unauthorized />} />
         <Route path="/manager" element={
-          // <AuthManager>
+          <AuthManager>
             <ManagerLayout/> 
-          // </AuthManager>
+          </AuthManager>
         }>
           <Route path="list" element={<ListEmployeeDashBoard />} />
-          <Route path="/manager/addnew" element={<AddNewForm />} />
+          <Route path="addnew" element={<AddNewForm />} />
           {/* <Route path="list" element={<ListEmployee />} />
           <Route path="stats" element={<Statistics />} /> */}
         </Route>
