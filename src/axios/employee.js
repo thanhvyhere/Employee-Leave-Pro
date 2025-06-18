@@ -2,11 +2,7 @@ import axiosInstance from './platform.js';
 
 export const getLeaveRequests = async (selectedStatus) => {
   try {
-    const token = localStorage.getItem('token');
     const res = await axiosInstance.get('/my-leave-requests', {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
       params: {
         status: selectedStatus,
       },
@@ -17,9 +13,6 @@ export const getLeaveRequests = async (selectedStatus) => {
     return [];
   }
 };
-
-
-import axiosInstance from './platform';
 
 // Lấy thông tin nhân viên
 export const getEmployeeProfile = async (token) => {
@@ -65,8 +58,4 @@ export const createLeaveRequest = async ({ leave_dates, reason }) => {
     }
     throw err;
   }
-};
-export const getLeaveRequests = async () => {
-  const res = await axiosInstance.get('/leave-requests');
-  return res.data;
 };

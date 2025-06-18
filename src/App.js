@@ -21,9 +21,9 @@ function App() {
 
          <Route path="/unauthorized" element={<Unauthorized />} />
         <Route path="/manager" element={
-          // <AuthManager>
+          <AuthManager>
             <ManagerLayout/> 
-          // </AuthManager>
+          </AuthManager>
         }>
           <Route path="list" element={<ListEmployeeDashBoard />} />
           <Route path="addnew" element={<AddNewForm />} />
