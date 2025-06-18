@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Tab({ selected, onSelect }) {
   const tabs = [
-    { status: "Pending", label: "Pending", icon: "/pendinh.png" },
+    { status: "pending", label: "pending", icon: "/pendinh.png" },
     { status: "Accepted", label: "Accepted", icon: "/complete.png" },
     { status: "Rejected", label: "Rejected", icon: "/fail.png" },
   ];
