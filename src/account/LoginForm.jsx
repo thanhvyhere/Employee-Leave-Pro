@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../axios/account";
 export default function LoginForm() {
-  const [showError, setShowError] = useState(true);
+  const [showError, setShowError] = useState(false);
 const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
