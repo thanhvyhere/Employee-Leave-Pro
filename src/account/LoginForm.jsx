@@ -1,20 +1,26 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
+import { login } from '../api/auth';
 export default function LoginForm() {
-  const [showError, setShowError] = useState(false);
-
-  const checkValidInfo = (e) => {
+  const [showError, setShowError] = useState(true);
+const navigate = useNavigate();
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // demo logic giả: luôn hiện lỗi nếu không nhập gì
-    const email = e.target.email.value;
+    const username = e.target.username.value;
     const password = e.target.password.value;
-    if (!email || !password) {
+
+    const result = await login(username, password);
+
+    if (result.success) {
+      navigate(`/${result.user.role}`);
+    } else {
       setShowError(true);
     }
   };
 
   return (
-    <>
+    <div className="min-h-screen bg-gradient-to-br from-indigo-300 via-purple-300 to-pink-300 flex items-center justify-center">
       {/* POPUP ERROR */}
       {showError && (
         <div
@@ -51,24 +57,21 @@ export default function LoginForm() {
           </div>
         </div>
       )}
-
-      {/* FORM */}
-      <div className="flex min-h-full flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:px-8">
-        <div className="sm:mx-auto sm:w-full sm:max-w-md">
+      <div className="flex flex-col justify-center px-4 py-12 sm:px-6 lg:px-8 w-full max-w-xl">
+        <div className="mt-8 mb-8 sm:mx-auto sm:w-full border border-gray-300 rounded-lg p-10 shadow bg-white bg-opacity-90 backdrop-blur-md">
+          <div className="sm:mx-auto sm:w-full text-center">
           <img
             alt="Your Company"
             src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
-            className="mx-auto h-10 w-auto"
+            className="mx-auto h-12 w-auto"
           />
-          <h2 className="mt-6 text-center text-2xl font-bold text-gray-900">
+          <h2 className="mt-6 text-2xl font-bold text-gray-900">
             Sign in to your account
           </h2>
         </div>
-
-        <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md border border-gray-300 rounded-md p-6 shadow">
-          <form onSubmit={checkValidInfo} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-6 mt-8">
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-900">
+              <label htmlFor="email" className="block text-base font-medium text-gray-900">
                 Email address or username
               </label>
               <input
@@ -77,35 +80,35 @@ export default function LoginForm() {
                 type="text"
                 autoComplete="email"
                 required
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm px-3 py-2 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm px-4 py-3 text-lg focus:border-indigo-500 focus:ring-indigo-500"
               />
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-900">
+              <label htmlFor="password" className="block text-base font-medium text-gray-900">
                 Password
               </label>
               <input
                 id="password"
-                name="raw_password"
+                name="password"
                 type="password"
                 autoComplete="current-password"
                 required
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm px-3 py-2 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm px-4 py-3 text-lg focus:border-indigo-500 focus:ring-indigo-500"
               />
             </div>
 
             <div>
               <button
                 type="submit"
-                className="w-full flex justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white hover:bg-indigo-500"
+                className="w-full flex justify-center rounded-md bg-indigo-600 px-4 py-3 text-lg font-semibold text-white hover:bg-indigo-500"
               >
                 Sign in
               </button>
             </div>
           </form>
 
-          <p className="mt-6 text-center text-sm text-gray-500">
+          <p className="mt-6 text-center text-sm text-gray-600">
             You forgot your password?{" "}
             <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
               Get password
@@ -113,6 +116,6 @@ export default function LoginForm() {
           </p>
         </div>
       </div>
-    </>
+    </div>
   );
 }
