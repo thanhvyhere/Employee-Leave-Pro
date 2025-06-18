@@ -2,17 +2,19 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../axios/account";
 export default function LoginForm() {
-  const [showError, setShowError] = useState(true);
+  const [showError, setShowError] = useState(false);
 const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     const username = e.target.username.value;
     const password = e.target.password.value;
 
-    const result = await login(username, password);
+    console.log(username);
 
-    if (result.success) {
-      navigate(`/${result.user.role}`);
+    const result = await login(username, password);
+    if (result.role && result.token) {
+      localStorage.setItem('token', result.token); 
+      navigate(`/${result.role}`);
     } else {
       setShowError(true);
     }
@@ -74,10 +76,10 @@ const navigate = useNavigate();
                 Email address or username
               </label>
               <input
-                id="email"
-                name="email"
+                id="username"
+                name="username"
                 type="text"
-                autoComplete="email"
+                autoComplete="username"
                 required
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm px-4 py-3 text-lg focus:border-indigo-500 focus:ring-indigo-500"
               />
