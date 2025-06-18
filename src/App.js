@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LoginForm from './account/LoginForm'; // file form bạn đã tạo
+import EmployeePage from './employee/EmployeePage';
 import Home from './Home'; // giả sử có trang chính
 import "./global.css"
 function App() {
@@ -9,6 +10,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginForm />} />
+        <Route path="/employee" element={<EmployeePage />} />
+
       </Routes>
     </Router>
   );

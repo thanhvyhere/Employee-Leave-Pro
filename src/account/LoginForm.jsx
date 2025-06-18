@@ -1,8 +1,15 @@
 
-
-
+// import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import React from "react"
 export default function LoginForm() {
+  const navigate = useNavigate();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // ...validate hoặc gửi dữ liệu
+    navigate('/employee');
+  };
   return (
     <>
       {/*
@@ -71,8 +78,9 @@ export default function LoginForm() {
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Sign in
+              Sign in
               </button>
+              <Link to="/employee" className="text-blue-600 underline">Sign in</Link>
             </div>
           </form>
 
