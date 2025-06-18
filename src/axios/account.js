@@ -18,3 +18,13 @@ export const login = async (username, password) => {
     return { success: false, error: err };
   }
 };
+
+
+export const add = async (username, name, email) => {
+  const res = await axiosInstance.post('/employee', {
+    username,
+    name,
+    email,
+  })
+  return res.data
+}

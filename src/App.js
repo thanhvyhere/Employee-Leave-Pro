@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LoginForm from './account/LoginForm'; 
 import ManagerLayout from './manager/ManagerLayout';
-import AddNewForm from './manager/AddNewForm';
+import AddNewForm from './manager/(tabs)/AddNewForm';
 import Unauthorized from './pages/Unauthorized';
 import AuthManager from './middleware/authManager';
 import ListEmployeeDashBoard from './manager/(tabs)/ListEmployee';
@@ -16,15 +16,16 @@ function App() {
         <Route path="/login" element={<LoginForm />} />
          <Route path="/unauthorized" element={<Unauthorized />} />
         <Route path="/manager" element={
-          <AuthManager>
+          // <AuthManager>
             <ManagerLayout/> 
-          </AuthManager>
+          // </AuthManager>
         }>
           <Route path="list" element={<ListEmployeeDashBoard />} />
+          <Route path="/manager/addnew" element={<AddNewForm />} />
           {/* <Route path="list" element={<ListEmployee />} />
           <Route path="stats" element={<Statistics />} /> */}
         </Route>
-        <Route path="/manager/addnew" element={<AddNewForm />} />
+        
       </Routes>
     </Router>
   );
