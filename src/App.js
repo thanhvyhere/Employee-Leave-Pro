@@ -2,7 +2,10 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LoginForm from './account/LoginForm'; 
 import ManagerLayout from './manager/ManagerLayout';
-import AddNewForm from './manager/(tabs)/AddNewForm';
+import AddNewForm from './manager/AddNewForm';
+import Unauthorized from './pages/Unauthorized';
+import AuthManager from './middleware/authManager';
+import ListEmployeeDashBoard from './manager/(tabs)/ListEmployee';
 import RequestDayoff from './employee/(tabs)/RequestDayoff';
 import ViewDayoffList from './employee/(tabs)/ViewDayoffList';
 import EmployeePage from './employee/EmployeePage';
@@ -14,10 +17,15 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home /> } />
         <Route path="/login" element={<LoginForm />} />
-        <Route path="/manager" element={<ManagerLayout />}>
-          <Route path="addnew" element={<AddNewForm />} />
+         <Route path="/unauthorized" element={<Unauthorized />} />
+        <Route path="/manager" element={
+          <AuthManager>
+            <ManagerLayout/> 
+          </AuthManager>
+        }>
+          <Route path="list" element={<ListEmployeeDashBoard />} />
           {/* <Route path="list" element={<ListEmployee />} />
           <Route path="stats" element={<Statistics />} /> */}
         </Route>
@@ -29,7 +37,7 @@ function App() {
           <Route path="request" element={<RequestDayoff />} />
           <Route path="list" element={<ViewDayoffList />} />
         </Route>
-
+<Route path="/manager/addnew" element={<AddNewForm />} />
       </Routes>
     </Router>
   );
