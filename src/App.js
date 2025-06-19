@@ -28,7 +28,7 @@ function App() {
             <ManagerLayout/> 
           </AuthRoute>
         }>
-
+          <Route index element={<ListEmployeeDashBoard />} />
           <Route path="list" element={<ListEmployeeDashBoard />} />
           <Route path="addnew" element={<AddNewForm />} />
           <Route path="request" element={<ListRequest />} />

@@ -1,6 +1,14 @@
 import React from 'react';
+import { format } from "date-fns";
 
 const CardItem = ({ reason, leave_dates, approved_days, status, created_at }) => {
+
+    const safeFormatDate = (dateStr) => {
+      if (!dateStr) return "-";
+      const d = new Date(dateStr);
+      return isNaN(d) ? "-" : format(d, "yyyy-MM-dd HH:mm");
+    };
+  
   const statusColor = {
     pending: "text-yellow-500",
     approved: "text-green-500",
@@ -22,7 +30,17 @@ const CardItem = ({ reason, leave_dates, approved_days, status, created_at }) =>
       <div className="flex items-center mb-2">
         <img src="/clockblue.png" width="30px" className="mr-3" />
         <span className="font-medium mr-2 text-[#13467E]">Requested Time:</span>
-        <p className="font-medium text-[#13467E]">{leave_dates}</p>
+
+        <p className="font-medium text-[#13467E]">
+          {Array.isArray(leave_dates)
+            ? leave_dates.map((date, idx) => (
+                <span key={idx}>
+                  {safeFormatDate(date)}
+                  {idx < leave_dates.length - 1 && <br />}
+                </span>
+              ))
+            : leave_dates || ""}
+        </p>
       </div>
       <h1 className="font-medium my-2">Reason for leave</h1>
       <textarea

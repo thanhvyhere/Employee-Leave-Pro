@@ -43,7 +43,7 @@ export default function ViewDayoffList() {
             <CardItem
               key={item.id}
               reason={item.reason}
-              leave_dates={safeFormatDate(item.leave_dates)}
+              leave_dates={item.leave_dates}
               approved_days={safeFormatDate(item.approved_days)}
               created_at={safeFormatDate(item.created_at)}
               status={item.status}

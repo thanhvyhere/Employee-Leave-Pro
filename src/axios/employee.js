@@ -7,6 +7,7 @@ export const getLeaveRequests = async (selectedStatus) => {
         status: selectedStatus,
       },
     });
+    console.log(res.data);
     return res.data;
   } catch (err) {
     console.error('Failed to fetch leave requests:', err);

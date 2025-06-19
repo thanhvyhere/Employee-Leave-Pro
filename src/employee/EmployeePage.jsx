@@ -12,9 +12,12 @@ export default function LeaveCard({ employee, totalDays, remainingDays, onReques
       <div className="" >
           <Header
           />
-        <div className="bg-white shadow-lg border border-gray-200 rounded-lg p-8 w-full max-w-[800px] shadow-md mx-auto mt-[40px]">
-            <Outlet />  
+      {/* Nội dung chính, đẩy xuống dưới header + nav */}
+      <div className="  mt-[40px] overflow-auto no-scrollbar h-screen">
+        <div className="mx-auto bg-white shadow-lg border border-gray-200 rounded-lg p-8 w-full max-w-[800px] shadow-md ">
+          <Outlet />
         </div>
+      </div>
     </div>
     );
 }
