@@ -61,6 +61,7 @@ export default function ListEmployee() {
 
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+      <h1 className="text-2xl font-bold mb-3">Employee Dashboard</h1> 
       <div className="flex items-center justify-between flex-wrap md:flex-nowrap space-y-4 md:space-y-0 pb-4 bg-white dark:bg-gray-900 px-4 pt-4">
         <div className="relative">
           <button

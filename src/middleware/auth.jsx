@@ -45,4 +45,3 @@ export const AuthEmployee = function AuthEmployee({ children }) {
     return <Navigate to="/login" />;
   }
 }
-

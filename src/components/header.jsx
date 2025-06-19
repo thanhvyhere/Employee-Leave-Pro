@@ -1,6 +1,8 @@
 import 'flowbite';
 import React, { useEffect } from "react";
 import { initDropdowns } from 'flowbite';
+import React from "react";
+
 export default function Header() {
     useEffect(() => {
     // Khởi tạo tất cả các dropdown khi component được mount
@@ -29,6 +31,17 @@ export default function Header() {
                 </div>
             </div>
         </header>
+    <div className="fixed top-0 left-0 w-full bg-black z-50 shadow">
+      <header className="flex items-center justify-between px-6 py-2">
+        <div className="flex items-center">
+          <img src="/logo.gif" alt="Company Logo" width="40px" className="mr-3" />
+          <span className="text-white font-semibold">BeCaBiGo</span>
+        </div>
+        <div className="flex items-center">
+          <img src="/useravatar.gif" alt="Avatar" width="40px" className="mr-3" />
+          <span className="text-white font-medium">LeHuong</span>
+        </div>
+      </header>
     </div>
-    );
+  );
 }
