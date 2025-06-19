@@ -11,12 +11,19 @@ export default function Header() {
   };
 const username = localStorage.getItem('username');
 
-  const handleLogout = () => {
-    // 🔐 Thực hiện logout thật sự ở đây (xóa token, chuyển trang...)
-    console.log("Logging out...");
-    setShowConfirmModal(false); // Đóng modal
-    // window.location.href = "/login"; // Redirect nếu cần
-  };
+const handleLogout = () => {
+  // 1. Xoá JWT token khỏi localStorage
+  localStorage.removeItem("token"); // hoặc tên key bạn dùng để lưu JWT
+
+  // 2. In log để kiểm tra
+  console.log("Logging out...");
+
+  // 3. Đóng modal xác nhận
+  setShowConfirmModal(false);
+
+  // 4. Chuyển hướng về trang login
+  window.location.href = "/login";
+};
 
   useEffect(() => {
     initDropdowns();
