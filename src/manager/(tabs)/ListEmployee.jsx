@@ -11,16 +11,17 @@ export default function ListEmployee() {
   const [selected, setSelected] = useState([]);
 
   useEffect(() => {
-    const fetchEmployees = async () => {
-      const res = await getListEmployee();
-      if (res.success) {
-        setEmployees(res.data);
-      } else {
-        toast.error("Failed to load employees.");
-      }
-    };
     fetchEmployees();
   }, []);
+
+  const fetchEmployees = async () => {
+    const res = await getListEmployee();
+    if (res.success) {
+      setEmployees(res.data);
+    } else {
+      toast.error("Failed to load employees.");
+    }
+  };
 
   const handleAddUser = () => {
     navigator("/manager/addnew");
@@ -51,7 +52,9 @@ export default function ListEmployee() {
 
     try {
       await Promise.all(selected.map((id) => deleteEmployee(id)));
-      setEmployees((prev) => prev.filter((emp) => !selected.includes(emp.id)));
+
+      // Fetch lại danh sách mới sau khi xóa
+      await fetchEmployees();
       setSelected([]);
       toast.success("Deleted selected employees successfully.");
     } catch (err) {
@@ -63,52 +66,34 @@ export default function ListEmployee() {
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
       <h1 className="text-2xl font-bold mb-3">Employee Dashboard</h1> 
       <div className="flex items-center justify-between flex-wrap md:flex-nowrap space-y-4 md:space-y-0 pb-4 bg-white px-4 pt-4">
-        <div className="relative">
+        <div className="flex flex-row gap-5">
           <button
-            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-            type="button"
-            className="inline-flex items-center text-gray-700 bg-white border border-gray-300 hover:bg-gray-100 focus:ring-2 focus:ring-gray-200 font-medium rounded-md text-sm px-3 py-1.5"
+            onClick={handleAddUser}
+            className="flex items-center justify-center gap-1 flex-1 px-2 py-1.5 text-sm hover:bg-yellow-300 text-gray-700 border border-gray-300 rounded-md"
           >
-            Action
-            <svg className="w-2.5 h-2.5 ms-2.5" fill="none" viewBox="0 0 10 6">
-              <path d="M1 1l4 4 4-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
+            <FaUserPlus className="text-base" />
+            Add
           </button>
-          {isDropdownOpen && (
-            <div className="absolute z-10 mt-2 w-44 bg-white rounded-lg shadow">
-              <ul className="py-2 text-sm text-gray-700">
-                <li>
-                  <button
-                    onClick={handleAddUser}
-                    className="flex items-center gap-2 w-full px-3 py-1.5 text-sm hover:bg-gray-100 text-left rounded-md"
-                  >
-                    <FaUserPlus className="text-base" /> Add user
-                  </button>
-                </li>
-                <li>
-                  <button
-                    onClick={handleDeleteSelected}
-                    className="flex items-center gap-2 w-full px-3 py-1.5 text-sm hover:bg-gray-100 text-left rounded-md"
-                  >
-                    <FaRegTrashAlt className="text-base" /> Delete selected
-                  </button>
-                </li>
-              </ul>
-            </div>
-          )}
+          <button
+            onClick={handleDeleteSelected}
+            className="flex items-center justify-center gap-1 flex-1 px-2 py-1.5 text-sm hover:bg-red-300 text-gray-700 border border-gray-300 rounded-md"
+          >
+            <FaRegTrashAlt className="text-base" />
+            Delete
+          </button>
         </div>
         <div className="relative">
           <input
             type="text"
             placeholder="Search for users"
-            className="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 "
+            className="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
             disabled
           />
         </div>
       </div>
 
-      <table className="w-full text-sm text-gray-500  text-center">
-        <thead className="text-xs uppercase bg-gray-50  ">
+      <table className="w-full text-sm text-gray-500 text-center">
+        <thead className="text-xs uppercase bg-gray-50">
           <tr>
             <th className="p-4">
               <input
@@ -118,15 +103,13 @@ export default function ListEmployee() {
               />
             </th>
             <th className="px-6 py-3 text-left">Name</th>
-            <th className="px-6 py-3">Leave Days</th>
             <th className="px-6 py-3">Remaining Days</th>
-            <th className="px-6 py-3">Action</th>
           </tr>
         </thead>
         <tbody>
           {employees.length === 0 ? (
             <tr>
-              <td colSpan="6" className="px-6 py-8 text-gray-500  text-center">
+              <td colSpan="6" className="px-6 py-8 text-gray-500 text-center">
                 No employees found.
               </td>
             </tr>
@@ -140,22 +123,18 @@ export default function ListEmployee() {
                     onChange={() => handleSelect(emp.user_id)}
                   />
                 </td>
-                <th scope="row" className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap  text-left">
-                  <img className="w-10 h-10 rounded-full" src={emp.avatar || "https://i.pravatar.cc/150?img=1"} alt={emp.name} />
+                <th scope="row" className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap text-left">
+                  <img
+                    className="w-10 h-10 rounded-full"
+                    src={emp.avatar || "https://i.pravatar.cc/150?img=1"}
+                    alt={emp.name}
+                  />
                   <div className="ps-3 text-left">
                     <div className="text-base font-semibold">{emp.name}</div>
                     <div className="font-normal text-gray-500">{emp.email}</div>
                   </div>
                 </th>
-                <td className="px-6 py-4 whitespace-pre-line">
-                  {emp.leaveDays && emp.leaveDays.length > 0 ? emp.leaveDays.join("\n") : "—"}
-                </td>
-                <td className="px-6 py-4">{emp.leaveDays?.length || 0}</td>
-                <td className="px-6 py-4">
-                  <a href="#" className="font-medium text-blue-600 hover:underline">
-                    Edit user
-                  </a>
-                </td>
+                <td className="px-6 py-4">{emp.remandingdays || 0}</td>
               </tr>
             ))
           )}

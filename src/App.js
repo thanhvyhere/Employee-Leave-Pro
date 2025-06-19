@@ -4,7 +4,7 @@ import LoginForm from './account/LoginForm';
 import ManagerLayout from './manager/ManagerLayout';
 import AddNewForm from './manager/(tabs)/AddNewForm';
 import Unauthorized from './pages/Unauthorized';
-import {AuthManager,AuthEmployee} from './middleware/auth';
+import {AuthRoute} from './middleware/auth';
 import ListEmployeeDashBoard from './manager/(tabs)/ListEmployee';
 import ListRequest from './manager/(tabs)/ListRequest';
 import RequestDayoff from './employee/(tabs)/RequestDayoff';
@@ -14,6 +14,8 @@ import EmployeeInfo from './employee/(tabs)/EmployeeInfo';
 import Home from './Home'; // giả sử có trang chính
 import "./global.css"
 function App() {
+  const token = localStorage.getItem("token");
+  console.log(token)
   return (
     <Router>
       <Routes>
@@ -22,9 +24,9 @@ function App() {
 
          <Route path="/unauthorized" element={<Unauthorized />} />
         <Route path="/manager" element={
-          <AuthManager>
+          <AuthRoute requiredRole="manager">
             <ManagerLayout/> 
-          </AuthManager>
+          </AuthRoute>
         }>
 
           <Route path="list" element={<ListEmployeeDashBoard />} />
@@ -34,9 +36,9 @@ function App() {
         
         </Route>
          <Route path="/employee" element={
-          <AuthEmployee>
+          <AuthRoute requiredRole="employee">
             <EmployeePage />
-          </AuthEmployee>
+          </AuthRoute>
           }>
           <Route index element={<EmployeeInfo />} />
           <Route path="request" element={<RequestDayoff />} />

@@ -4,7 +4,11 @@ import { CalendarDays, FileText, Clock, BadgeCheck } from "lucide-react";
 import RejectModal from "../../components/RejectModal";
 import ConfirmModal from "../../components/ConfirmModal";
 
-import { getAllEmployeesLeaveRequests, approveLeaveRequest } from "../../axios/manager";
+import {
+  getAllEmployeesLeaveRequests,
+  approveLeaveRequest,
+  rejectLeaveRequest,
+} from "../../axios/manager";
 
 export default function ListRequest() {
   const [employees, setEmployees] = useState([]);
@@ -16,27 +20,42 @@ export default function ListRequest() {
   const [showRejectModal, setShowRejectModal] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
 
-  useEffect(() => {
-    getAllEmployeesLeaveRequests()
-      .then((res) => {
-        const employees = res.data.map((item) => ({
-          id: item.id,
-          name: item.user?.name || "N/A",
-          email: item.user?.email || "",
-          status: item.status,
-          avatar: item.user?.avatar || "https://i.pravatar.cc/150?img=1",
-          leaveDays: item.leave_dates,
-          reason: item.reason,
-          rejectReason: item.reject_reason,
-          requestDate: item.created_at ? item.created_at.slice(0, 10) : "",
-          approvedDate: item.approved_days && item.approved_days.length > 0 ? item.approved_days[0] : undefined,
-        }));
-        setEmployees(employees);
-      })
-      .catch(() => {
-        setEmployees([]);
-        toast.error("Failed to load request list");
+  const fetchEmployees = async (preserveSelectedId = null) => {
+    try {
+      const res = await getAllEmployeesLeaveRequests();
+      const updatedEmployees = res.data.map((item) => ({
+        id: item.id,
+        name: item.user?.name || "N/A",
+        email: item.user?.email || "",
+        status: item.status,
+        avatar: item.user?.avatar || "https://i.pravatar.cc/150?img=1",
+        leaveDays: item.leave_dates,
+        reason: item.reason,
+        rejectReason: item.reject_reason,
+        requestDate: item.created_at ? item.created_at.slice(0, 10) : "",
+        approvedDate:
+          item.approved_days && item.approved_days.length > 0
+            ? item.approved_days[0]
+            : undefined,
+      }));
+      updatedEmployees.sort((a, b) => {
+        if (!a.requestDate) return 1;
+        if (!b.requestDate) return -1;
+        return b.requestDate.localeCompare(a.requestDate);
       });
+      setEmployees(updatedEmployees);
+      if (preserveSelectedId) {
+        const updatedSelected = updatedEmployees.find((e) => e.id === preserveSelectedId);
+        setSelectedEmployee(updatedSelected || null);
+      }
+    } catch (err) {
+      toast.error("Failed to load request list");
+      setEmployees([]);
+    }
+  };
+
+  useEffect(() => {
+    fetchEmployees();
   }, []);
 
   const isWithinTimeRange = (dateStr, range) => {
@@ -96,9 +115,16 @@ export default function ListRequest() {
     }).format(date);
   };
 
-  const confirmReject = (reason) => {
-    toast.error("Rejected");
-    setSelectedEmployee(null);
+  const confirmReject = async (reason) => {
+    if (!selectedEmployee) return;
+    try {
+      await rejectLeaveRequest(selectedEmployee.id, reason);
+      toast.success("Rejected");
+      await fetchEmployees(selectedEmployee.id);
+      setShowRejectModal(false);
+    } catch (err) {
+      toast.error("Reject failed");
+    }
   };
 
   const handleFilterClick = (status) => {
@@ -108,31 +134,15 @@ export default function ListRequest() {
 
   const handleConfirmClick = () => {
     setShowConfirmModal(true);
-  } 
+  };
+
   const handleApprove = async () => {
     if (!selectedEmployee) return;
     try {
       await approveLeaveRequest(selectedEmployee.id);
       toast.success("Approved");
-      getAllEmployeesLeaveRequests()
-        .then((res) => {
-          const employees = res.data.map((item) => ({
-            id: item.id,
-            name: item.user?.name || "N/A",
-            email: item.user?.email || "",
-            status: item.status,
-            avatar: item.user?.avatar || "https://i.pravatar.cc/150?img=1",
-            leaveDays: item.leave_dates,
-            reason: item.reason,
-            requestDate: item.created_at ? item.created_at.slice(0, 10) : "",
-            approvedDate: item.approved_days && item.approved_days.length > 0 ? item.approved_days[0] : undefined,
-          }));
-          setEmployees(employees);
-          setSelectedEmployee(null);
-        })
-        .catch(() => {
-          toast.error("Không thể tải lại danh sách sau khi duyệt");
-        });
+      await fetchEmployees(selectedEmployee.id);
+      setShowConfirmModal(false);
     } catch (err) {
       toast.error("Approve failed");
     }
@@ -147,6 +157,7 @@ export default function ListRequest() {
       <div className="md:col-span-3">
         <h1 className="text-2xl font-bold mb-2">List Request</h1>
 
+        {/* Filter Section */}
         <div className="mb-3 flex justify-start gap-4">
           <div className="relative">
             <button
@@ -210,8 +221,7 @@ export default function ListRequest() {
           </div>
         </div>
 
-
-        {/* Employee List */}
+        {/* List */}
         {filteredEmployees.length === 0 ? (
           <p className="text-center text-gray-500 py-8">No employees found.</p>
         ) : (
@@ -230,12 +240,8 @@ export default function ListRequest() {
                     <div className="text-sm text-gray-500">{emp.email}</div>
                   </div>
                 </div>
-                
-                <div
-                  className={`flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium ${getStatusStyle(
-                    emp.status
-                  )}`}
-                >
+
+                <div className={`flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium ${getStatusStyle(emp.status)}`}>
                   <span className={`w-2.5 h-2.5 rounded-full ${getDotStyle(emp.status)}`}></span>
                   {emp.status.charAt(0).toUpperCase() + emp.status.slice(1)}
                 </div>
@@ -245,10 +251,9 @@ export default function ListRequest() {
         )}
       </div>
 
-      {/* DETAIL PANEL */}
+      {/* Detail Panel */}
       {selectedEmployee && (
         <div className="md:col-span-2 mt-20 animate-fade-in bg-white border border-gray-300 rounded-xl shadow p-4 space-y-4 w-full self-start">
-
           <div className="flex justify-between items-start">
             <div className="flex items-center gap-3">
               <img src={selectedEmployee.avatar} className="w-12 h-12 rounded-md" alt={selectedEmployee.name} />
@@ -268,7 +273,6 @@ export default function ListRequest() {
           </div>
 
           <div className="space-y-4">
-            {/* Request Date */}
             <div className="bg-blue-50 p-4 rounded-xl shadow-sm font-semibold">
               <div className="flex items-center gap-2 text-blue-700">
                 <Clock size={18} />
@@ -277,8 +281,7 @@ export default function ListRequest() {
               <p className="text-sm text-gray-700 mt-1 ml-6">{formatDate(selectedEmployee.requestDate)}</p>
             </div>
 
-            {/* Leave Days */}
-            <div className="bg-violet-50 p-4 rounded-xl shadow-sm  font-semibold">
+            <div className="bg-violet-50 p-4 rounded-xl shadow-sm font-semibold">
               <div className="flex items-center gap-2 text-violet-700">
                 <CalendarDays size={18} />
                 <span>LEAVE DAYS</span>
@@ -290,7 +293,6 @@ export default function ListRequest() {
               </ul>
             </div>
 
-            {/* Approved Date (only show if approved) */}
             {selectedEmployee.status === "approved" && selectedEmployee.approvedDate && (
               <div className="bg-green-50 p-4 rounded-xl shadow-sm font-semibold">
                 <div className="flex items-center gap-2 text-green-700">
@@ -302,7 +304,6 @@ export default function ListRequest() {
             )}
           </div>
 
-          {/* Reason */}
           <div className="bg-yellow-50 p-3 rounded-lg">
             <div className="flex items-center gap-2 font-semibold text-yellow-700">
               <FileText size={18} />
@@ -311,23 +312,26 @@ export default function ListRequest() {
             <p className="text-sm text-gray-700 mt-1 ml-6">{selectedEmployee.reason}</p>
           </div>
 
-          {/* Action Buttons */}
           {selectedEmployee.status === "pending" && (
             <div className="flex justify-end gap-2">
               <button
-                onClick={() => handleRejectClick(456)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleRejectClick();
+                }}
                 className="bg-red-100 text-red-700 px-4 py-1.5 rounded-md text-sm font-medium hover:bg-red-200"
               >
                 Reject
               </button>
               <button
-                onClick={() => handleConfirmClick(selectedEmployee.id)}
+                onClick={() => handleConfirmClick()}
                 className="bg-green-100 text-green-700 px-4 py-1.5 rounded-md text-sm font-medium hover:bg-green-200"
               >
                 Approve
               </button>
             </div>
           )}
+
           {selectedEmployee.status === "rejected" && (
             <div className="bg-red-50 p-3 rounded-lg">
               <div className="flex items-center gap-2 font-semibold text-red-700">
@@ -337,23 +341,22 @@ export default function ListRequest() {
               <p className="text-sm text-gray-700 mt-1 ml-6">{selectedEmployee.rejectReason}</p>
             </div>
           )}
-           <RejectModal
-                show={showRejectModal}
-                onClose={() => setShowRejectModal(false)}
-                onConfirm={confirmReject}
-                title="Reject Request"
-                message="Please confirm rejection and provide a reason:"
-            />
-             <ConfirmModal
-              show={showConfirmModal}
-              onClose={() => setShowConfirmModal(false)}
-              onConfirm={handleApprove}
-              title="Approve Leave Request"
-              message="Are you sure you want to approve this employee's request?"
-            />
 
+          <RejectModal
+            show={showRejectModal}
+            onClose={() => setShowRejectModal(false)}
+            onConfirm={confirmReject}
+            title="Reject Request"
+            message="Please confirm rejection and provide a reason:"
+          />
+          <ConfirmModal
+            show={showConfirmModal}
+            onClose={() => setShowConfirmModal(false)}
+            onConfirm={handleApprove}
+            title="Approve Leave Request"
+            message="Are you sure you want to approve this employee's request?"
+          />
         </div>
-       
       )}
     </div>
   );

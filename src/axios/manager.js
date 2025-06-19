@@ -26,3 +26,16 @@ export const approveLeaveRequest = async (id) => {
   });
   return res.data;
 }; 
+// Từ chối đơn nghỉ phép (manager)
+export const rejectLeaveRequest = async (id, reason) => {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    throw new Error('No authentication token found');
+  }
+  const res = await axiosInstance.put(`/manager/leave-requests/${id}/reject`, { reason }, {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  });
+  return res.data;
+}; 
