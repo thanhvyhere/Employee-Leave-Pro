@@ -1,7 +1,6 @@
 import 'flowbite';
 import React, { useEffect } from "react";
 import { initDropdowns } from 'flowbite';
-import React from "react";
 
 export default function Header() {
     useEffect(() => {
@@ -42,6 +41,7 @@ export default function Header() {
           <span className="text-white font-medium">LeHuong</span>
         </div>
       </header>
+    </div>
     </div>
   );
 }
