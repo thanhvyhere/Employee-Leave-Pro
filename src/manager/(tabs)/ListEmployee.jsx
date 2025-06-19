@@ -133,12 +133,12 @@ export default function ListEmployee() {
             </tr>
           ) : (
             employees.map((emp) => (
-              <tr key={emp.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+              <tr key={emp.user_id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                 <td className="p-4">
                   <input
                     type="checkbox"
-                    checked={selected.includes(emp.id)}
-                    onChange={() => handleSelect(emp.id)}
+                    checked={selected.includes(emp.user_id)}
+                    onChange={() => handleSelect(emp.user_id)}
                   />
                 </td>
                 <th scope="row" className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white text-left">
