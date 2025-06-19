@@ -142,7 +142,7 @@ export default function ListEmployee() {
                   />
                 </td>
                 <th scope="row" className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap  text-left">
-                  <img className="w-10 h-10 rounded-full" src={emp.avatar || "/default-avatar.png"} alt={emp.name} />
+                  <img className="w-10 h-10 rounded-full" src={emp.avatar || "https://i.pravatar.cc/150?img=1"} alt={emp.name} />
                   <div className="ps-3 text-left">
                     <div className="text-base font-semibold">{emp.name}</div>
                     <div className="font-normal text-gray-500">{emp.email}</div>
