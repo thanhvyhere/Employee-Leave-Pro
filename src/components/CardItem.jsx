@@ -1,7 +1,7 @@
 import React from 'react';
 import { format } from "date-fns";
 
-const CardItem = ({ reason, leave_dates, approved_days, status, created_at }) => {
+const CardItem = ({ reason, leave_dates, approved_days, status, created_at, reject_reason }) => {
 
     const safeFormatDate = (dateStr) => {
       if (!dateStr) return "-";
@@ -49,20 +49,17 @@ const CardItem = ({ reason, leave_dates, approved_days, status, created_at }) =>
         readOnly
         value={reason}
       />
-      {status === "Rejected" && (
+
+      {status === "rejected" && (
         <>
-          <div className="flex items-center mt-4">
-            <img src="/clockred.png" width="20px" className="mr-3" />
-            <span className="font-medium mr-2 text-[#FF4A4D]">Rejected Time:</span>
-            <p className="font-medium text-[#FF4A4D]">{approved_days}</p>
-          </div>
-          <h1 className="font-medium my-2">Reason for leave</h1>
+          <h1 className="font-medium my-2">Reason for reject</h1>
           <textarea
             className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none"
             rows="4"
             readOnly
-            value={reason}
+            value={reject_reason}
           />
+
         </>
       )}
     </div>

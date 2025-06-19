@@ -293,7 +293,7 @@ export default function ListRequest() {
               </ul>
             </div>
 
-            {selectedEmployee.status === "approved" && selectedEmployee.approvedDate && (
+            {(selectedEmployee.status === "approved" || selectedEmployee.status === "rejected")  && selectedEmployee.approvedDate && (
               <div className="bg-green-50 p-4 rounded-xl shadow-sm font-semibold">
                 <div className="flex items-center gap-2 text-green-700">
                   <BadgeCheck size={18} />

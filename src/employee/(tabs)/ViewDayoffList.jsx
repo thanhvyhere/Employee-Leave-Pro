@@ -47,6 +47,7 @@ export default function ViewDayoffList() {
               approved_days={safeFormatDate(item.approved_days)}
               created_at={safeFormatDate(item.created_at)}
               status={item.status}
+              reject_reason={item.reject_reason}
             />
           ))
         ) : (
