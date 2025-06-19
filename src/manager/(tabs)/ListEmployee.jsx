@@ -118,7 +118,6 @@ export default function ListEmployee() {
               />
             </th>
             <th className="px-6 py-3 text-left">Name</th>
-            <th className="px-6 py-3">Status</th>
             <th className="px-6 py-3">Leave Days</th>
             <th className="px-6 py-3">Remaining Days</th>
             <th className="px-6 py-3">Action</th>
@@ -148,18 +147,6 @@ export default function ListEmployee() {
                     <div className="font-normal text-gray-500">{emp.email}</div>
                   </div>
                 </th>
-                <td className="px-6 py-4">
-                  <button
-                    className={`px-3 py-1 text-xs font-medium rounded-full flex items-center justify-center mx-auto gap-2 ${
-                      emp.status === "online" ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
-                    }`}
-                  >
-                    <span
-                      className={`h-2.5 w-2.5 rounded-full ${emp.status === "online" ? "bg-green-500" : "bg-red-500"}`}
-                    ></span>
-                    {emp.status === "online" ? "Active" : "Blocked"}
-                  </button>
-                </td>
                 <td className="px-6 py-4 whitespace-pre-line">
                   {emp.leaveDays && emp.leaveDays.length > 0 ? emp.leaveDays.join("\n") : "—"}
                 </td>

@@ -34,7 +34,7 @@ export default function ListRequest() {
       })
       .catch(() => {
         setEmployees([]);
-        toast.error("Không thể tải danh sách đơn nghỉ phép");
+        toast.error("Failed to load request list");
       });
   }, []);
 
@@ -113,7 +113,6 @@ export default function ListRequest() {
     try {
       await approveLeaveRequest(selectedEmployee.id);
       toast.success("Approved");
-      // Reload lại danh sách
       getAllEmployeesLeaveRequests()
         .then((res) => {
           const employees = res.data.map((item) => ({
