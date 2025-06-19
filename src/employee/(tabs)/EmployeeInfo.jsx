@@ -108,7 +108,7 @@ export default function EmployeeInfo() {
             <li className="flex justify-between items-center">
               <span className="text-green-600 font-semibold">{totalDays}</span>
             </li>
-
+          
             <li className="flex justify-between items-center">
               <span className="text-red-600 font-semibold">{remainingDays}</span>
             </li>
