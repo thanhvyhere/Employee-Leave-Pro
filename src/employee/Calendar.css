@@ -1,0 +1,67 @@
+/* DatePickerCustom.module.css */
+
+/* Điều chỉnh màu nền của lịch */
+.react-datepicker {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+/* Điều chỉnh màu nền của header (tháng/năm) */
+.react-datepicker__header {
+  background-color: #13467E; /* LightBlue */
+  border-bottom: none;
+  
+
+  padding: 10px 0px;
+}
+.react-datepicker__current-month{
+    color: white;
+}
+.react-datepicker__day-name{
+    font-size: 12px;
+    color: white;
+}
+/* Điều chỉnh màu chữ của các ngày */
+.react-datepicker__day {
+    font-size: 11px;
+  color: #333;
+}
+
+/* Điều chỉnh màu chữ của các ngày trong tuần (T2, T3...) */
+.react-datepicker__navigation-icon--previous::before {
+    color: red;
+    right: -7px;}
+/* Màu của ngày được chọn */
+.react-datepicker__day--selected,
+.react-datepicker__day--range-start,
+.react-datepicker__day--range-end,
+.react-datepicker__day--in-range {
+  color: white;
+  border-radius: 50%;
+}
+
+/* Màu của ngày khi hover */
+.react-datepicker__day:hover {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+/* Màu của ngày trong tháng khác (bị mờ đi) */
+.react-datepicker__day--outside-month {
+  color: #ccc;
+}
+
+/* Điều chỉnh mũi tên chuyển tháng */
+.react-datepicker__navigation--previous,
+.react-datepicker__navigation--next {
+    top: 10px; /* Điều chỉnh vị trí mũi tên */
+}
+
+.react-datepicker__navigation-icon::before {
+    border-color: #1079aa; /* Màu mũi tên */
+}
+
+/* Màu highlight các ngày (đã có sẵn trong component của bạn) */
+.highlighted-day {
+  background-color: #ffeb3b; /* Vàng */
+  border-radius: 50%;
+}
