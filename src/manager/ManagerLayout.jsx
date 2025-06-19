@@ -28,9 +28,9 @@ export default function ManagerLayout() {
 
 
       {/* Nội dung chính, đẩy xuống dưới header + nav */}
-      <div className="pt-[80px] pb-[80px] mx-[10%]">
+      <div className="pt-[80px] pb-[80px] mx-[15%]">
         {/* <h1 className="text-2xl font-bold mb-6">Manager Dashboard</h1> */}
-        <div className="bg-white">
+        <div className="bg-white w-full">
           <Outlet />
         </div>
       </div>
