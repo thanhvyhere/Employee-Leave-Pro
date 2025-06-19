@@ -1,17 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Tab from "../../components/Tabs.jsx";
 import CardItem from "../../components/CardItem";
-// Giả lập dữ liệu leave request (bạn có thể thay thế bằng API hoặc props)
-const sampleRequests = [
-  { id: 1, reason: "Sick leave", status: "Pending", requestedDate: "2025-06-18" },
-  { id: 2, reason: "Family event", status: "Accepted", requestedDate: "2025-06-17" },
-  { id: 3, reason: "Medical checkup", status: "Rejected", requestedDate: "2025-06-16", rejectedDate: "2025-06-17" },
-];
+import { getLeaveRequests } from "../../axios/employee";
 
 export default function ViewDayoffList() {
-  const [selectedStatus, setSelectedStatus] = useState("Pending");
+  const [selectedStatus, setSelectedStatus] = useState("pending");
+  const [requests, setRequests] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const filteredRequests = sampleRequests.filter(req => req.status === selectedStatus);
+  useEffect(() => {
+    const fetchRequests = async () => {
+      setLoading(true);
+      const data = await getLeaveRequests(selectedStatus);
+      setRequests(data);
+      setLoading(false);
+    };
+    fetchRequests();
+  }, [selectedStatus]);
+
+  const filteredRequests = requests.filter(req => req.status === selectedStatus);
+  console.log(filteredRequests);
 
   return (
     <div>
@@ -21,8 +29,10 @@ export default function ViewDayoffList() {
 
       <Tab selected={selectedStatus} onSelect={setSelectedStatus} />
 
-      <div className="content  p-4 px-[0px]">
-        {filteredRequests.length > 0 ? (
+      <div className="content bg-[#FBFBFB] p-4">
+        {loading ? (
+          <p className="text-gray-500 text-center">Loading...</p>
+        ) : filteredRequests.length > 0 ? (
           filteredRequests.map((item) => (
             <CardItem
               key={item.id}
