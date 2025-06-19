@@ -1,3 +1,33 @@
+# 🏖️ Employee-Leave-Pro
+
+A web-based employee leave management application built with React and Tailwind CSS. It allows employees to submit leave requests and managers to review and manage them easily.
+
+---
+
+## 🎯 Features
+
+- **Submit Leave Requests**: Employees can select leave type, start/end date, and provide reasons.
+- **Track Leave Status**: View pending, approved, and rejected requests.
+- **Admin Panel**: Managers can review, approve, or reject leave applications.
+- **Statistics & History**: Track total leave days and view leave history by month or year.
+- **Rejection Feedback**: Admins can provide feedback when rejecting a request.
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js ≥ 16
+- npm or yarn
+
+### Installation
+
+```bash
+git clone https://github.com/thanhvyhere/Employee-Leave-Pro.git
+cd Employee-Leave-Pro
+npm install
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
