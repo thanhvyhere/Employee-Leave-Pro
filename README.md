@@ -23,7 +23,6 @@ A web-based employee leave management application built with React and Tailwind 
 
 ### Installation
 
-bash
 git clone https://github.com/thanhvyhere/Employee-Leave-Pro.git
 cd Employee-Leave-Pro
 npm install
