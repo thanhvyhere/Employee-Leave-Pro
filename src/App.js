@@ -33,9 +33,10 @@ function App() {
         
         </Route>
          <Route path="/employee" element={
-          <AuthEmployee>
-            <EmployeePage />
-          </AuthEmployee>}>
+          // <AuthEmployee>
+          //   <EmployeePage />
+          // </AuthEmployee>
+          <EmployeePage />}>
           <Route index element={<EmployeeInfo />} />
           <Route path="request" element={<RequestDayoff />} />
           <Route path="list" element={<ViewDayoffList />} />
