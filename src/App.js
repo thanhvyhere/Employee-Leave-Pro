@@ -25,7 +25,6 @@ function App() {
           <AuthManager>
             <ManagerLayout/> 
           </AuthManager>
-          // <ManagerLayout/> 
         }>
 
           <Route path="list" element={<ListEmployeeDashBoard />} />
@@ -35,9 +34,9 @@ function App() {
         
         </Route>
          <Route path="/employee" element={
-          // <AuthEmployee>
+          <AuthEmployee>
             <EmployeePage />
-          // </AuthEmployee>
+          </AuthEmployee>
           }>
           <Route index element={<EmployeeInfo />} />
           <Route path="request" element={<RequestDayoff />} />
