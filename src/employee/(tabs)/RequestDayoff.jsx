@@ -76,8 +76,8 @@ export default function RequestDayoff({ employee, totalDays, remainingDays, onRe
       <div className="flex w-full gap-4">
         <button
           type="button"
+          onClick={() => window.history.back()}
           className="flex-1 border-2 border-[#2F8AC3] text-[#2F8AC3] font-medium py-3 rounded hover:bg-blue-50 text-center"
-          onClick={onViewList}
         >
           Back
         </button>

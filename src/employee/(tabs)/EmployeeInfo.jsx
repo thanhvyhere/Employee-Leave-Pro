@@ -27,14 +27,14 @@ export default function EmployeeInfo({ employee, totalDays, remainingDays, onReq
                         <li className="flex justify-between items-center">
                             <div className="flex items-center space-x-2">
                                 <img src="/calendar.png" alt="Company Logo" id="companyLogo" width="20px" className="mr-3" />
-                                <span className="font-medium">Number total day‑off</span>
+                                <span className="font-medium">Number total day(s)-off</span>
                             </div>
                         </li>
 
                         <li className="flex justify-between items-center">
                             <div className="flex items-center space-x-2">
                                 <img src="/calendar.png" alt="Company Logo" id="companyLogo" width="20px" className="mr-3" />
-                                <span className="font-medium">Number left day‑off</span>
+                                <span className="font-medium">Number left day(s)-off</span>
                             </div>
                         </li>
                     </ul>

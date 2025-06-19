@@ -37,8 +37,8 @@ export default function ViewDayoffList() {
             <CardItem
               key={item.id}
               reason={item.reason}
-              requestedDate={item.requestedDate}
-              rejectedDate={item.rejectedDate}
+              requestedDate={new Date(item.requestedDate).toISOString()}
+              rejectedDate={new Date(item.requestedDate).toISOString()}
               status={item.status}
             />
           ))
@@ -50,7 +50,7 @@ export default function ViewDayoffList() {
         <button
           type="button"
            onClick={() => window.history.back()}
-          className=" border-2 w-[450px] border-[#2F8AC3] text-[#2F8AC3] font-medium py-3 rounded hover:bg-blue-50 text-center">
+          className=" border-2 w-[735px] border-[#2F8AC3] text-[#2F8AC3] font-medium py-3 rounded hover:bg-blue-50 text-center">
           Back
         </button>
 
