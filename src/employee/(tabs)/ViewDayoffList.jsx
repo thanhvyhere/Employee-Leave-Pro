@@ -46,6 +46,15 @@ export default function ViewDayoffList() {
           <p className="text-gray-500 text-center">No requests found for "{selectedStatus}"</p>
         )}
       </div>
+      <div className="text-center">
+        <button
+          type="button"
+           onClick={() => window.history.back()}
+          className=" border-2 w-[450px] border-[#2F8AC3] text-[#2F8AC3] font-medium py-3 rounded hover:bg-blue-50 text-center">
+          Back
+        </button>
+
+      </div>
     </div>
   );
 }

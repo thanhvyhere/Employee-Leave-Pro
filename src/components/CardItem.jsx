@@ -16,7 +16,7 @@ const CardItem = ({ reason, requestedDate, rejectedDate, status }) => {
   };
 
   return (
-    <div className="mb-4 p-4 rounded bg-blue-100">
+    <div className="mb-2 p-4 rounded border">
       <h1 className={`text-right font-medium ${statusColor[status]} mb-2`}>
         {statusTitle[status]}
       </h1>

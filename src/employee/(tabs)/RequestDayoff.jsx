@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import Calendar from '../Calendar.css';
 import { format } from "date-fns";
 import { createLeaveRequest } from "../../axios/employee";
 
@@ -166,47 +167,49 @@ export default function RequestDayoff({ onViewList }) {
   };
 
   return (
-    <>
+    <div>
       <form onSubmit={handleSubmit} className="">
         {/* Header */}
         <div className="bg-blue-100 text-center py-3 rounded mb-6">
-          <h1 className="text-[#13467E] font-semibold text-lg">Request Day Off</h1>
-        </div>
+        <h1 className="text-[#13467E] font-semibold text-lg">Request Day(s)-Off Form</h1>
+      </div>
 
-        {/* Calendar */}
-        <div className="flex justify-center relative z-10 mb-[200px]" style={{ minHeight: "420px" }}>
-          <div className="inline-block scale-[1.7] origin-top">
-            <DatePicker
-              selected={null}
-              onChange={toggleDate}
-              inline
-              highlightDates={selectedDates}
-              minDate={new Date()} // chỉ cho chọn từ hôm nay trở đi
-              dayClassName={date =>
-                selectedDates.find(d => d.toDateString() === date.toDateString())
-                  ? "bg-blue-300 rounded-full"
-                  : undefined
-              }
-            />
-          </div>
+      {/* Calendar */}
+      <div className="flex justify-center relative z-10 mb-[220px]">
+        <div className="inline-block scale-[1.85] origin-top">
+          <DatePicker
+            selected={null}
+            onChange={toggleDate}
+            inline
+            highlightDates={selectedDates}
+            dayClassName={date =>
+              selectedDates.find(d => d.toDateString() === date.toDateString())
+                ? "bg-blue-300 rounded-full"
+                : undefined
+            }
+          />
         </div>
+      </div>
+      {/* Selected Dates + Reason */}
+      <div className="mb-6 mt-6">
+      <div className="flex items-center space-x-2 mb-3">
+        <img src="/calendar.png" alt="Company Logo" id="companyLogo" width="24px" className="mr-3" />
+        <h1 className="text-[#13467E] font-semibold text-lg ">Selected day(s)-off</h1>
+      </div>
 
-        {/* Selected Dates + Reason */}
-        <div className="mb-6">
-          <h1 className="text-[#13467E] font-semibold text-lg mb-1">Selected day-off</h1>
-          <div className="selected-dayoff text-sm text-gray-700 mb-4">
-            {selectedDates.length > 0 ? (
-              <ul className="list-inside text-lg">
-                {selectedDates
-                  .sort((a, b) => a - b)
-                  .map((date, index) => (
-                    <li key={index}>{format(date, "dd/MM/yyyy")}</li>
-                  ))}
-              </ul>
-            ) : (
-              <p className="text-lg">No days selected.</p>
-            )}
-          </div>
+        <div className="selected-dayoff text-sm text-gray-700 mb-4">
+          {selectedDates.length > 0 ? (
+            <ul className=" list-inside text-lg">
+              {selectedDates
+                .sort((a, b) => a - b)
+                .map((date, index) => (
+                  <li className="mb-2" key={index}>{format(date, "EEEE dd/MM/yyyy")}</li>
+                ))}
+            </ul>
+          ) : (
+            <p className="text-lg">No days selected.</p>
+          )}
+        </div>
 
           <h1 className="text-[#13467E] font-semibold text-lg mb-1">Reason</h1>
           <textarea
@@ -279,6 +282,6 @@ export default function RequestDayoff({ onViewList }) {
           }
         }
       `}</style>
-    </>
+    </div>
   );
 }
