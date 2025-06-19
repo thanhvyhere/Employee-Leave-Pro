@@ -63,8 +63,8 @@ const navigate = useNavigate();
           <div className="sm:mx-auto sm:w-full text-center">
           <img
             alt="Your Company"
-            src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
-            className="mx-auto h-12 w-auto"
+            src="/logo.gif"
+            className="mx-auto w-[80px] h-[80px]"
           />
           <h2 className="mt-6 text-2xl font-bold text-gray-900">
             Sign in to your account

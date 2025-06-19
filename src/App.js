@@ -22,10 +22,12 @@ function App() {
 
          <Route path="/unauthorized" element={<Unauthorized />} />
         <Route path="/manager" element={
-          // <AuthManager>
+          <AuthManager>
             <ManagerLayout/> 
-          // 
+          </AuthManager>
+          // <ManagerLayout/> 
         }>
+
           <Route path="list" element={<ListEmployeeDashBoard />} />
           <Route path="addnew" element={<AddNewForm />} />
           <Route path="request" element={<ListRequest />} />
