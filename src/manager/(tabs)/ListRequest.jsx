@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { CalendarDays, FileText, Clock, BadgeCheck } from "lucide-react";
+import { getAllEmployeesLeaveRequests } from "../../axios/manager";
 
 export default function ListRequest() {
   const [employees, setEmployees] = useState([]);
@@ -9,53 +10,26 @@ export default function ListRequest() {
   const [selectedEmployee, setSelectedEmployee] = useState(null);
 
   useEffect(() => {
-    setEmployees([
-      {
-        id: 1,
-        name: "Nguyễn Văn A",
-        email: "a.nguyen@example.com",
-        status: "approved",
-        avatar: "https://i.pravatar.cc/150?img=1",
-        leaveDays: ["2024-07-01", "2024-07-02"],
-        reason: "Đi du lịch cùng gia đình",
-        requestDate: "2024-06-10",
-        approvedDate: "2024-06-11",
-      },
-      {
-        id: 2,
-        name: "Trần Thị B",
-        email: "b.tran@example.com",
-        status: "pending",
-        avatar: "https://i.pravatar.cc/150?img=2",
-        leaveDays: ["2024-07-05"],
-        reason: "Chăm sóc người thân bệnh",
-        requestDate: "2024-06-12",
-      },
-      {
-        id: 3,
-        name: "Lê Văn C",
-        email: "c.le@example.com",
-        status: "rejected",
-        avatar: "https://i.pravatar.cc/150?img=3",
-        leaveDays: ["2024-07-10"],
-        reason: "Tham gia khoá học nâng cao",
-        requestDate: "2024-06-15",
-      },
-      ...Array.from({ length: 15 }, (_, i) => {
-        const status = ["approved", "pending", "rejected"][i % 3];
-        return {
-          id: i + 4,
-          name: `Nhân viên ${i + 4}`,
-          email: `user${i + 4}@example.com`,
-          status,
-          avatar: `https://i.pravatar.cc/150?img=${i + 4}`,
-          leaveDays: ["2024-07-15", "2024-07-20"],
-          reason: "Nghỉ phép cá nhân",
-          requestDate: `2024-06-${10 + (i % 10)}`,
-          approvedDate: status === "approved" ? `2024-06-${11 + (i % 10)}` : undefined,
-        };
-      }),
-    ]);
+    getAllEmployeesLeaveRequests()
+      .then((res) => {
+        // Map dữ liệu API về format FE đang dùng
+        const employees = res.data.map((item) => ({
+          id: item.id,
+          name: item.user?.name || "N/A",
+          email: item.user?.email || "",
+          status: item.status,
+          avatar: item.user?.avatar || "https://i.pravatar.cc/150?img=1",
+          leaveDays: item.leave_dates,
+          reason: item.reason,
+          requestDate: item.created_at ? item.created_at.slice(0, 10) : "",
+          approvedDate: item.updated_at ? item.updated_at.slice(0, 10) : undefined,
+        }));
+        setEmployees(employees);
+      })
+      .catch((err) => {
+        setEmployees([]);
+        toast.error("Không thể tải danh sách đơn nghỉ phép");
+      });
   }, []);
 
   const filteredEmployees =
@@ -236,7 +210,7 @@ export default function ListRequest() {
               <FileText size={18} />
               <span> REQUEST REASON</span>
             </div>
-            <p className="text-sm text-gray-700 mt-1 ml-6">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit pariatur odit consequuntur sed ipsa nesciunt ab quo commodi facere! Odio cum voluptates ipsa, doloribus adipisci nesciunt architecto fugiat perspiciatis quod.</p>
+            <p className="text-sm text-gray-700 mt-1 ml-6">{selectedEmployee.reason}</p>
           </div>
 
           {/* Action Buttons */}
