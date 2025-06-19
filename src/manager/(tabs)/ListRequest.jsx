@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { CalendarDays, FileText, Clock, BadgeCheck } from "lucide-react";
-
+import RejectModal from "../../components/RejectModal";
+import ConfirmModal from "../../components/ConfirmModal";
 export default function ListRequest() {
   const [employees, setEmployees] = useState([]);
   const [filterStatus, setFilterStatus] = useState("all");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
+  const [showRejectModal, setShowRejectModal] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  // const [selectedRequestId, setSelectedRequestId] = useState(null);
 
   useEffect(() => {
     setEmployees([
@@ -68,7 +72,7 @@ export default function ListRequest() {
       case "approved":
         return "bg-green-100 text-green-800";
       case "pending":
-        return "bg-yellow-100 text-yellow-800";
+        return "bg-orange-100 text-orange-800";
       case "rejected":
         return "bg-red-100 text-red-800";
       default:
@@ -81,7 +85,7 @@ export default function ListRequest() {
       case "approved":
         return "bg-green-500";
       case "pending":
-        return "bg-yellow-500";
+        return "bg-orange-500";
       case "rejected":
         return "bg-red-500";
       default:
@@ -89,19 +93,36 @@ export default function ListRequest() {
     }
   };
 
+  
+
+    const confirmReject = (reason) => {
+        // Gửi request với lý do từ modal
+        // console.log("Rejected ID:", selectedRequestId);
+        // console.log("Reason:", reason);
+        toast.error("Rejected");
+        setSelectedEmployee(null);
+
+        // TODO: Gọi API backend tại đây
+    };
+
   const handleFilterClick = (status) => {
     setFilterStatus(status);
     setIsDropdownOpen(false);
   };
-
+  const handleConfirmClick = (id) => {
+    setShowConfirmModal(true);
+  } 
   const handleApprove = () => {
     toast.success("Approved");
     setSelectedEmployee(null);
   };
-
+  const handleRejectClick = (id, reason) => {
+    setShowRejectModal(true);
+  } 
   const handleReject = () => {
-    toast.error("Rejected");
-    setSelectedEmployee(null);
+    // setSelectedRequestId(requestId);
+    
+    
   };
 
   return (
@@ -243,13 +264,13 @@ export default function ListRequest() {
           {selectedEmployee.status === "pending" && (
             <div className="flex justify-end gap-2">
               <button
-                onClick={handleReject}
+                onClick={() => handleRejectClick(456)}
                 className="bg-red-100 text-red-700 px-4 py-1.5 rounded-md text-sm font-medium hover:bg-red-200"
               >
                 Reject
               </button>
               <button
-                onClick={handleApprove}
+                onClick={() => handleConfirmClick(123)}
                 className="bg-green-100 text-green-700 px-4 py-1.5 rounded-md text-sm font-medium hover:bg-green-200"
               >
                 Approve
@@ -266,7 +287,23 @@ export default function ListRequest() {
               <p className="text-sm text-gray-700 mt-1 ml-6">Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus, non laboriosam delectus officiis dolorum earum quaerat asperiores cupiditate laudantium enim numquam architecto inventore obcaecati voluptatum nostrum? Soluta, voluptas! Exercitationem, repellendus!</p>
             </div>
           )}
+           <RejectModal
+                show={showRejectModal}
+                onClose={() => setShowRejectModal(false)}
+                onConfirm={confirmReject}
+                title="Reject Request"
+                message="Please confirm rejection and provide a reason:"
+            />
+             <ConfirmModal
+              show={showConfirmModal}
+              onClose={() => setShowConfirmModal(false)}
+              onConfirm={handleApprove}
+              title="Approve Leave Request"
+              message="Are you sure you want to approve this employee's request?"
+            />
+
         </div>
+       
       )}
     </div>
   );
