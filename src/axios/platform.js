@@ -11,4 +11,16 @@ const axiosInstance = axios.create({
   timeout: 10000,
 });
 
+// Thêm interceptor để tự động gắn token vào header cho mọi request
+axiosInstance.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
 export default axiosInstance;
