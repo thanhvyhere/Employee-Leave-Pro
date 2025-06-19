@@ -2,7 +2,7 @@ import React from "react";
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from "@headlessui/react";
 import { CheckCircleIcon } from "@heroicons/react/24/outline";
 
-export default function ConfirmModal({ show, onClose, onConfirm, title, message }) {
+export default function ConfirmModal({ show, onClose, onConfirm, title, message, button }) {
   if (!show) return null;
 
   return (
@@ -38,7 +38,7 @@ export default function ConfirmModal({ show, onClose, onConfirm, title, message 
               }}
               className="px-4 py-2 rounded-md bg-green-600 text-white hover:bg-green-500 text-sm"
             >
-              Approve
+              {button}
             </button>
           </div>
         </DialogPanel>

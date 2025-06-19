@@ -355,6 +355,7 @@ export default function ListRequest() {
             onConfirm={handleApprove}
             title="Approve Leave Request"
             message="Are you sure you want to approve this employee's request?"
+            button="Approve"
           />
         </div>
       )}
