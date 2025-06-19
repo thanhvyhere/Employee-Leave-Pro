@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { CalendarDays, FileText, Clock, BadgeCheck } from "lucide-react";
-import { getAllEmployeesLeaveRequests } from "../../axios/manager";
+import { getAllEmployeesLeaveRequests, approveLeaveRequest } from "../../axios/manager";
 
 export default function ListRequest() {
   const [employees, setEmployees] = useState([]);
@@ -68,9 +68,34 @@ export default function ListRequest() {
     setIsDropdownOpen(false);
   };
 
-  const handleApprove = () => {
-    toast.success("Approved");
-    setSelectedEmployee(null);
+  const handleApprove = async () => {
+    if (!selectedEmployee) return;
+    try {
+      await approveLeaveRequest(selectedEmployee.id);
+      toast.success("Approved");
+      // Reload lại danh sách
+      getAllEmployeesLeaveRequests()
+        .then((res) => {
+          const employees = res.data.map((item) => ({
+            id: item.id,
+            name: item.user?.name || "N/A",
+            email: item.user?.email || "",
+            status: item.status,
+            avatar: item.user?.avatar || "https://i.pravatar.cc/150?img=1",
+            leaveDays: item.leave_dates,
+            reason: item.reason,
+            requestDate: item.created_at ? item.created_at.slice(0, 10) : "",
+            approvedDate: item.approved_days && item.approved_days.length > 0 ? item.approved_days[0] : undefined,
+          }));
+          setEmployees(employees);
+          setSelectedEmployee(null);
+        })
+        .catch(() => {
+          toast.error("Không thể tải lại danh sách sau khi duyệt");
+        });
+    } catch (err) {
+      toast.error("Approve failed");
+    }
   };
 
   const handleReject = () => {

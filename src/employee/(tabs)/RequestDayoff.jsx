@@ -178,16 +178,17 @@ export default function RequestDayoff({ onViewList }) {
       <div className="flex justify-center relative z-10 mb-[220px]">
         <div className="inline-block scale-[1.85] origin-top">
           <DatePicker
-            selected={null}
-            onChange={toggleDate}
-            inline
-            highlightDates={selectedDates}
-            dayClassName={date =>
-              selectedDates.find(d => d.toDateString() === date.toDateString())
-                ? "bg-blue-300 rounded-full"
-                : undefined
-            }
-          />
+              selected={null}
+              onChange={toggleDate}
+              inline
+              highlightDates={selectedDates}
+              minDate={new Date()} // chỉ cho chọn từ hôm nay trở đi
+              dayClassName={date =>
+                selectedDates.find(d => d.toDateString() === date.toDateString())
+                  ? "bg-blue-300 rounded-full"
+                  : undefined
+              }
+            />
         </div>
       </div>
       {/* Selected Dates + Reason */}
