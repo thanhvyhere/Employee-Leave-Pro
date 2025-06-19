@@ -6,6 +6,7 @@ import AddNewForm from './manager/(tabs)/AddNewForm';
 import Unauthorized from './pages/Unauthorized';
 import AuthManager from './middleware/authManager';
 import ListEmployeeDashBoard from './manager/(tabs)/ListEmployee';
+import ListRequest from './manager/(tabs)/ListRequest';
 import RequestDayoff from './employee/(tabs)/RequestDayoff';
 import ViewDayoffList from './employee/(tabs)/ViewDayoffList';
 import EmployeePage from './employee/EmployeePage';
@@ -27,8 +28,8 @@ function App() {
         }>
           <Route path="list" element={<ListEmployeeDashBoard />} />
           <Route path="addnew" element={<AddNewForm />} />
-          {/* <Route path="list" element={<ListEmployee />} />
-          <Route path="stats" element={<Statistics />} /> */}
+          <Route path="request" element={<ListRequest />} />
+          {/* <Route path="stats" element={<Statistics />} /> */}
         
         </Route>
          <Route path="/employee" element={<EmployeePage />}>

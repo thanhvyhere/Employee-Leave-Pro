@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { Toaster } from 'react-hot-toast'
 import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
-import { FaUserPlus  } from "react-icons/fa";
+
 import { ChevronDownIcon } from '@heroicons/react/16/solid'
 import { add } from '../../axios/account'
 import { useNavigate } from 'react-router-dom'
@@ -47,6 +47,7 @@ const handleSubmit = async (e) => {
   return (
     
     <form onSubmit={handleSubmit}>
+      <h1 className="text-2xl font-bold mb-3">Add New Employee</h1> 
       <input type="hidden" name="name" value={name} />
 
       <div className="space-y-12">
@@ -194,9 +195,8 @@ const handleSubmit = async (e) => {
 
       {/* Submit */}
       <div className="mt-6 flex items-center justify-end gap-x-6">
-        <button type="button" className="text-sm/6 font-semibold text-gray-900">
-          Cancel
-        </button>
+        <button type="button" class="text-red-700 hover:text-white border border-red-300 hover:bg-red-400 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">
+          Cancel</button>
         <button
           type="submit"
           className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
