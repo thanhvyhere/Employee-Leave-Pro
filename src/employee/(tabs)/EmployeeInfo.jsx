@@ -44,6 +44,7 @@ export default function EmployeeInfo() {
   }, []);
 
   useEffect(() => {
+    const token = localStorage.getItem('token');
     if (!userId) return;
 
     const fetchData = async () => {
@@ -54,6 +55,7 @@ export default function EmployeeInfo() {
         // Gọi API lấy thông tin nhân viên
         const profileResponse = await fetch(`http://localhost:3001/api/auth/profile`, {
           headers: {
+            'Authorization': `Bearer ${token}`,
             'user-id': userId
           }
         });
@@ -66,6 +68,7 @@ export default function EmployeeInfo() {
         // Gọi API lấy thông tin ngày phép
         const balanceResponse = await fetch(`http://localhost:3001/api/leave-balance/left`, {
           headers: {
+            'Authorization': `Bearer ${token}`,
             'user-id': userId
           }
         });

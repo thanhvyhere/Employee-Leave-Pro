@@ -4,7 +4,7 @@ import LoginForm from './account/LoginForm';
 import ManagerLayout from './manager/ManagerLayout';
 import AddNewForm from './manager/(tabs)/AddNewForm';
 import Unauthorized from './pages/Unauthorized';
-import AuthManager from './middleware/authManager';
+import {AuthManager,AuthEmployee} from './middleware/auth';
 import ListEmployeeDashBoard from './manager/(tabs)/ListEmployee';
 import RequestDayoff from './employee/(tabs)/RequestDayoff';
 import ViewDayoffList from './employee/(tabs)/ViewDayoffList';
@@ -31,7 +31,10 @@ function App() {
           <Route path="stats" element={<Statistics />} /> */}
         
         </Route>
-         <Route path="/employee" element={<EmployeePage />}>
+         <Route path="/employee" element={
+          <AuthEmployee>
+            <EmployeePage />
+          </AuthEmployee>}>
           <Route index element={<EmployeeInfo />} />
           <Route path="request" element={<RequestDayoff />} />
           <Route path="list" element={<ViewDayoffList />} />
