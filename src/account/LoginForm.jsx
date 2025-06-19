@@ -1,89 +1,127 @@
+import React, { useState } from "react";
+import { Link } from 'react-router-dom';import { useNavigate } from "react-router-dom";
+import { login } from "../axios/account";
+import { jwtDecode } from 'jwt-decode';
 
-
-
-import React from "react"
 export default function LoginForm() {
-  return (
-    <>
-      {/*
-        This example requires updating your template:
+  const [showError, setShowError] = useState(false);
+const navigate = useNavigate();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const username = e.target.username.value;
+    const password = e.target.password.value;
 
-        ```
-        <html class="h-full bg-white">
-        <body class="h-full">
-        ```
-      */}
-      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+
+    const result = await login(username, password);
+    if (result.role && result.token) {
+      localStorage.setItem('token', result.token); 
+      localStorage.setItem('username', username); 
+      console.log(username);
+      navigate(`/${result.role}`);
+    } else {
+      setShowError(true);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-indigo-300 via-purple-300 to-pink-300 flex items-center justify-center">
+      {/* POPUP ERROR */}
+      {showError && (
+        <div
+          id="error-modal"
+          className="fixed inset-0 z-10 flex items-center justify-center bg-black/40"
+        >
+          <div className="bg-white rounded-lg shadow-lg w-full max-w-md p-6">
+            <div className="flex items-center space-x-3">
+              <div className="bg-red-100 p-2 rounded-full">
+                <svg
+                  className="w-6 h-6 text-red-600"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3m0 4h.01" />
+                  <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.5" fill="none" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-medium text-gray-900">Login Error</h3>
+            </div>
+            <p className="mt-3 text-sm text-gray-600">
+              Incorrect username or password. Please try again.
+            </p>
+            <div className="mt-4 flex justify-end">
+              <button
+                onClick={() => setShowError(false)}
+                className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500"
+              >
+                OK
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      <div className="flex flex-col justify-center px-4 py-12 sm:px-6 lg:px-8 w-full max-w-xl">
+        <div className="mt-8 mb-8 sm:mx-auto sm:w-full border border-gray-300 rounded-lg p-10 shadow bg-white bg-opacity-90 backdrop-blur-md">
+          <div className="sm:mx-auto sm:w-full text-center">
           <img
             alt="Your Company"
-            src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
-            className="mx-auto h-10 w-auto"
+            src="/logo.gif"
+            className="mx-auto w-[80px] h-[80px]"
           />
-          <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
+          <h2 className="mt-6 text-2xl font-bold text-gray-900">
             Sign in to your account
           </h2>
         </div>
-
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form action="#" method="POST" className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6 mt-8">
             <div>
-              <label htmlFor="email" className="block text-sm/6 font-medium text-gray-900">
-                Email address
+              <label htmlFor="email" className="block text-base font-medium text-gray-900">
+                Username
               </label>
-              <div className="mt-2">
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  required
-                  autoComplete="email"
-                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                />
-              </div>
+              <input
+                id="username"
+                name="username"
+                type="text"
+                placeholder="John Doe"
+                autoComplete="username"
+                required
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm px-4 py-3 text-lg focus:border-indigo-500 focus:ring-indigo-500"
+              />
             </div>
 
             <div>
-              <div className="flex items-center justify-between">
-                <label htmlFor="password" className="block text-sm/6 font-medium text-gray-900">
-                  Password
-                </label>
-                <div className="text-sm">
-                  <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
-                    Forgot password?
-                  </a>
-                </div>
-              </div>
-              <div className="mt-2">
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  required
-                  autoComplete="current-password"
-                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                />
-              </div>
+              <label htmlFor="password" className="block text-base font-medium text-gray-900">
+                Password
+              </label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                placeholder="********"
+                autoComplete="current-password"
+                required
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm px-4 py-3 text-lg focus:border-indigo-500 focus:ring-indigo-500"
+              />
             </div>
 
             <div>
               <button
                 type="submit"
-                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                className="w-full flex justify-center rounded-md bg-indigo-600 px-4 py-3 text-lg font-semibold text-white hover:bg-indigo-500"
               >
-                Sign in
+              Sign in
               </button>
             </div>
           </form>
 
-          <p className="mt-10 text-center text-sm/6 text-gray-500">
-            Not a member?{' '}
+          <p className="mt-6 text-center text-sm text-gray-600">
+            You forgot your password?{" "}
             <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
-              Start a 14 day free trial
+              Get password
             </a>
           </p>
         </div>
       </div>
-    </>
-  )
+    </div>
+  );
 }
