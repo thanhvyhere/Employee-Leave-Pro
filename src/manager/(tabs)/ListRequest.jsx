@@ -27,6 +27,7 @@ export default function ListRequest() {
           avatar: item.user?.avatar || "https://i.pravatar.cc/150?img=1",
           leaveDays: item.leave_dates,
           reason: item.reason,
+          rejectReason: item.reject_reason,
           requestDate: item.created_at ? item.created_at.slice(0, 10) : "",
           approvedDate: item.approved_days && item.approved_days.length > 0 ? item.approved_days[0] : undefined,
         }));
@@ -333,8 +334,7 @@ export default function ListRequest() {
                 <FileText size={18} />
                 <span>REJECT REASON</span>
               </div>
-              {/* <p className="text-sm text-gray-700 mt-1 ml-6">{selectedEmployee.rejectReason}</p> */}
-              <p className="text-sm text-gray-700 mt-1 ml-6">Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus, non laboriosam delectus officiis dolorum earum quaerat asperiores cupiditate laudantium enim numquam architecto inventore obcaecati voluptatum nostrum? Soluta, voluptas! Exercitationem, repellendus!</p>
+              <p className="text-sm text-gray-700 mt-1 ml-6">{selectedEmployee.rejectReason}</p>
             </div>
           )}
            <RejectModal
