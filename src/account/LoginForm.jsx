@@ -73,12 +73,13 @@ const navigate = useNavigate();
           <form onSubmit={handleSubmit} className="space-y-6 mt-8">
             <div>
               <label htmlFor="email" className="block text-base font-medium text-gray-900">
-                Email address or username
+                Username
               </label>
               <input
                 id="username"
                 name="username"
                 type="text"
+                placeholder="John Doe"
                 autoComplete="username"
                 required
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm px-4 py-3 text-lg focus:border-indigo-500 focus:ring-indigo-500"
@@ -93,6 +94,7 @@ const navigate = useNavigate();
                 id="password"
                 name="password"
                 type="password"
+                placeholder="********"
                 autoComplete="current-password"
                 required
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm px-4 py-3 text-lg focus:border-indigo-500 focus:ring-indigo-500"
