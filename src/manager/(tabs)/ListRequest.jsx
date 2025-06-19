@@ -317,7 +317,7 @@ export default function ListRequest() {
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  handleRejectClick(456, "Rejected");
+                  handleRejectClick();
                 }}
                 className="bg-red-100 text-red-700 px-4 py-1.5 rounded-md text-sm font-medium hover:bg-red-200"
               >
