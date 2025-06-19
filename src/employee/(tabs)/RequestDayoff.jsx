@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import Calendar from '../Calendar.css';
 import { format } from "date-fns";
 
 export default function RequestDayoff({ employee, totalDays, remainingDays, onRequest, onViewList }) {
@@ -20,12 +21,12 @@ export default function RequestDayoff({ employee, totalDays, remainingDays, onRe
     <div className="">
       {/* Header */}
       <div className="bg-blue-100 text-center py-3 rounded mb-6">
-        <h1 className="text-[#13467E] font-semibold text-lg">Request Day Off Form</h1>
+        <h1 className="text-[#13467E] font-semibold text-lg">Request Day(s)-Off Form</h1>
       </div>
 
       {/* Calendar */}
-      <div className="flex justify-center relative z-10 mb-[200px]" style={{ minHeight: "420px" }}>
-        <div className="inline-block scale-[1.7] origin-top">
+      <div className="flex justify-center relative z-10 mb-[220px]">
+        <div className="inline-block scale-[1.85] origin-top">
           <DatePicker
             selected={null}
             onChange={toggleDate}
@@ -40,15 +41,19 @@ export default function RequestDayoff({ employee, totalDays, remainingDays, onRe
         </div>
       </div>
       {/* Selected Dates + Reason */}
-      <div className="mb-6">
-        <h1 className="text-[#13467E] font-semibold text-lg mb-1">Selected day-off</h1>
+      <div className="mb-6 mt-6">
+      <div className="flex items-center space-x-2 mb-3">
+        <img src="/calendar.png" alt="Company Logo" id="companyLogo" width="24px" className="mr-3" />
+        <h1 className="text-[#13467E] font-semibold text-lg ">Selected day(s)-off</h1>
+      </div>
+
         <div className="selected-dayoff text-sm text-gray-700 mb-4">
           {selectedDates.length > 0 ? (
             <ul className=" list-inside text-lg">
               {selectedDates
                 .sort((a, b) => a - b)
                 .map((date, index) => (
-                  <li key={index}>{format(date, "dd/MM/yyyy")}</li>
+                  <li className="mb-2" key={index}>{format(date, "EEEE dd/MM/yyyy")}</li>
                 ))}
             </ul>
           ) : (
@@ -56,7 +61,7 @@ export default function RequestDayoff({ employee, totalDays, remainingDays, onRe
           )}
         </div>
 
-        <h1 className="text-[#13467E] font-semibold text-lg mb-1">Reason</h1>
+        <h1 className="text-[#13467E] font-semibold text-lg mb-3">Reason for day-off</h1>
         <textarea
           id="reason"
           className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Tab from "../../components/Tabs.jsx";
 import CardItem from "../../components/CardItem";
-
 // Giả lập dữ liệu leave request (bạn có thể thay thế bằng API hoặc props)
 const sampleRequests = [
   { id: 1, reason: "Sick leave", status: "Pending", requestedDate: "2025-06-18" },
@@ -22,7 +21,7 @@ export default function ViewDayoffList() {
 
       <Tab selected={selectedStatus} onSelect={setSelectedStatus} />
 
-      <div className="content bg-[#FBFBFB] p-4">
+      <div className="content  p-4 px-[0px]">
         {filteredRequests.length > 0 ? (
           filteredRequests.map((item) => (
             <CardItem
@@ -36,6 +35,15 @@ export default function ViewDayoffList() {
         ) : (
           <p className="text-gray-500 text-center">No requests found for "{selectedStatus}"</p>
         )}
+      </div>
+      <div className="text-center">
+        <button
+          type="button"
+           onClick={() => window.history.back()}
+          className=" border-2 w-[450px] border-[#2F8AC3] text-[#2F8AC3] font-medium py-3 rounded hover:bg-blue-50 text-center">
+          Back
+        </button>
+
       </div>
     </div>
   );
