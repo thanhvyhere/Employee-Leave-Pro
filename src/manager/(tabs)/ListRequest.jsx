@@ -140,7 +140,7 @@ export default function ListRequest() {
         {filteredEmployees.length === 0 ? (
           <p className="text-center text-gray-500 py-8">No employees found.</p>
         ) : (
-          <div className="divide-y divide-gray-200 border border-gray-300 rounded-md overflow-hidden">
+          <div className="divide-y divide-gray-200 border border-gray-300 rounded-md overflow-auto max-h-[70%]">
             {filteredEmployees.map((emp) => (
               <div
                 key={emp.id}
