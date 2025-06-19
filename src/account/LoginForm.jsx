@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Link } from 'react-router-dom';import { useNavigate } from "react-router-dom";
 import { login } from "../axios/account";
+import { jwtDecode } from 'jwt-decode';
+
 export default function LoginForm() {
   const [showError, setShowError] = useState(false);
 const navigate = useNavigate();
@@ -9,11 +11,12 @@ const navigate = useNavigate();
     const username = e.target.username.value;
     const password = e.target.password.value;
 
-    console.log(username);
 
     const result = await login(username, password);
     if (result.role && result.token) {
       localStorage.setItem('token', result.token); 
+      localStorage.setItem('username', username); 
+      console.log(username);
       navigate(`/${result.role}`);
     } else {
       setShowError(true);

@@ -8,7 +8,7 @@ export default function Tab({ selected, onSelect }) {
   ];
 
   return (
-    <div className="flex flex-row justify-around bg-[#81BAEE]  rounded">
+    <div className="flex flex-row justify-around bg-[#81BAEE] rounded">
       {tabs.map((tab) => (
         <div
           key={tab.status}
