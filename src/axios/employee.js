@@ -13,41 +13,53 @@ export const getLeaveRequests = async (selectedStatus) => {
     return [];
   }
 };
+import axiosInstance from './platform';
 
 // Lấy thông tin nhân viên
-export const getEmployeeProfile = async (token) => {
+export const getEmployeeProfile = async () => {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    throw new Error("No authentication token found");
+  }
+  
   const res = await axiosInstance.get(`/auth/profile`, {
-    params: { token: token }
+    headers: { 
+      'Authorization': `Bearer ${token}` 
+    }
   });
   return res.data;
 };
 
 // Lấy số ngày phép còn lại
-export const getLeaveBalance = async (userId) => {
+export const getLeaveBalance = async () => {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    throw new Error("No authentication token found");
+  }
+  
   const res = await axiosInstance.get(`/leave-balance/left`, {
-    params: { user_id: userId }
+    headers: { 
+      'Authorization': `Bearer ${token}` 
+    }
   });
   return res.data;
 };
+
 export const createLeaveRequest = async ({ leave_dates, reason }) => {
   const token = localStorage.getItem('token');
-  let user_id = null;
-  if (token) {
-    const base64Url = token.split('.')[1];
-    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
-      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join(''));
-    user_id = JSON.parse(jsonPayload).user_id;
+  if (!token) {
+    throw new Error("No authentication token found");
   }
-  if (!user_id) {
-    throw new Error("No user_id found in token");
-  }
+  
   try {
     const res = await axiosInstance.post(
       '/leave-requests',
       { leave_dates, reason },
-      { headers: { 'user-id': user_id } }
+      { 
+        headers: { 
+          'Authorization': `Bearer ${token}` 
+        } 
+      }
     );
     return res.data;
   } catch (err) {
@@ -58,4 +70,19 @@ export const createLeaveRequest = async ({ leave_dates, reason }) => {
     }
     throw err;
   }
+};
+
+
+export const getLeaveRequests = async () => {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    throw new Error("No authentication token found");
+  }
+  
+  const res = await axiosInstance.get('/leave-requests', {
+    headers: { 
+      'Authorization': `Bearer ${token}` 
+    }
+  });
+  return res.data;
 };
