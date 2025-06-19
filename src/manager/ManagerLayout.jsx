@@ -6,7 +6,8 @@ import Header from '../components/header';
 
 export default function ManagerLayout() {
   const tabClasses = ({ isActive }) =>
-    `flex items-center gap-2 text-sm font-medium px-4 py-2 transition ${
+    `flex items-center gap-2 text-sm font-medium px-4 py-2 transition border border-black ml-1 shadow-lg rounded-lg 
+      hover:bg-green-100 ${
       isActive
         ? "bg-yellow-100 text-black"
         : "bg-white text-gray-400 hover:text-gray-600"
@@ -17,7 +18,7 @@ export default function ManagerLayout() {
       <Header />
       <Toaster position="top-right" />
 
-      <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-40 bg-white shadow-md rounded-md border border-gray-300 inline-flex">
+      <div className="fixed bottom-5 left-1/2 transform -translate-x-1/2 z-40 bg-white inline-flex">
         <NavLink to="list" className={tabClasses}>
           <FaUserFriends /> List Employee
         </NavLink>
@@ -28,9 +29,9 @@ export default function ManagerLayout() {
 
 
       {/* Nội dung chính, đẩy xuống dưới header + nav */}
-      <div className="pt-[80px] pb-[80px] mx-[10%]">
+      <div className="pb-[10%] mx-[10%] overflow-auto no-scrollbar h-screen">
         {/* <h1 className="text-2xl font-bold mb-6">Manager Dashboard</h1> */}
-        <div className="bg-white">
+        <div className="bg-white ">
           <Outlet />
         </div>
       </div>

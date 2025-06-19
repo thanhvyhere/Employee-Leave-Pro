@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Link } from 'react-router-dom';import { useNavigate } from "react-router-dom";
 import { login } from "../axios/account";
+import { jwtDecode } from 'jwt-decode';
+
 export default function LoginForm() {
   const [showError, setShowError] = useState(false);
 const navigate = useNavigate();
@@ -9,11 +11,12 @@ const navigate = useNavigate();
     const username = e.target.username.value;
     const password = e.target.password.value;
 
-    console.log(username);
 
     const result = await login(username, password);
     if (result.role && result.token) {
       localStorage.setItem('token', result.token); 
+      localStorage.setItem('username', username); 
+      console.log(username);
       navigate(`/${result.role}`);
     } else {
       setShowError(true);
@@ -63,8 +66,8 @@ const navigate = useNavigate();
           <div className="sm:mx-auto sm:w-full text-center">
           <img
             alt="Your Company"
-            src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
-            className="mx-auto h-12 w-auto"
+            src="/logo.gif"
+            className="mx-auto w-[80px] h-[80px]"
           />
           <h2 className="mt-6 text-2xl font-bold text-gray-900">
             Sign in to your account
@@ -73,12 +76,13 @@ const navigate = useNavigate();
           <form onSubmit={handleSubmit} className="space-y-6 mt-8">
             <div>
               <label htmlFor="email" className="block text-base font-medium text-gray-900">
-                Email address or username
+                Username
               </label>
               <input
                 id="username"
                 name="username"
                 type="text"
+                placeholder="John Doe"
                 autoComplete="username"
                 required
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm px-4 py-3 text-lg focus:border-indigo-500 focus:ring-indigo-500"
@@ -93,6 +97,7 @@ const navigate = useNavigate();
                 id="password"
                 name="password"
                 type="password"
+                placeholder="********"
                 autoComplete="current-password"
                 required
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm px-4 py-3 text-lg focus:border-indigo-500 focus:ring-indigo-500"

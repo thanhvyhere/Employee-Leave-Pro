@@ -22,10 +22,11 @@ function App() {
 
          <Route path="/unauthorized" element={<Unauthorized />} />
         <Route path="/manager" element={
-          // <AuthManager>
+          <AuthManager>
             <ManagerLayout/> 
-          // 
+          </AuthManager>
         }>
+
           <Route path="list" element={<ListEmployeeDashBoard />} />
           <Route path="addnew" element={<AddNewForm />} />
           <Route path="request" element={<ListRequest />} />
@@ -33,10 +34,10 @@ function App() {
         
         </Route>
          <Route path="/employee" element={
-          // <AuthEmployee>
-          //   <EmployeePage />
-          // </AuthEmployee>
-          <EmployeePage />}>
+          <AuthEmployee>
+            <EmployeePage />
+          </AuthEmployee>
+          }>
           <Route index element={<EmployeeInfo />} />
           <Route path="request" element={<RequestDayoff />} />
           <Route path="list" element={<ViewDayoffList />} />
