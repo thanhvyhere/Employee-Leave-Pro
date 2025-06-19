@@ -62,12 +62,12 @@ export default function ListEmployee() {
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
       <h1 className="text-2xl font-bold mb-3">Employee Dashboard</h1> 
-      <div className="flex items-center justify-between flex-wrap md:flex-nowrap space-y-4 md:space-y-0 pb-4 bg-white dark:bg-gray-900 px-4 pt-4">
+      <div className="flex items-center justify-between flex-wrap md:flex-nowrap space-y-4 md:space-y-0 pb-4 bg-white px-4 pt-4">
         <div className="relative">
           <button
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
             type="button"
-            className="inline-flex items-center text-gray-700 bg-white border border-gray-300 hover:bg-gray-100 focus:ring-2 focus:ring-gray-200 font-medium rounded-md text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-700"
+            className="inline-flex items-center text-gray-700 bg-white border border-gray-300 hover:bg-gray-100 focus:ring-2 focus:ring-gray-200 font-medium rounded-md text-sm px-3 py-1.5"
           >
             Action
             <svg className="w-2.5 h-2.5 ms-2.5" fill="none" viewBox="0 0 10 6">
@@ -75,12 +75,12 @@ export default function ListEmployee() {
             </svg>
           </button>
           {isDropdownOpen && (
-            <div className="absolute z-10 mt-2 w-44 bg-white rounded-lg shadow dark:bg-gray-700">
-              <ul className="py-2 text-sm text-gray-700 dark:text-gray-200">
+            <div className="absolute z-10 mt-2 w-44 bg-white rounded-lg shadow">
+              <ul className="py-2 text-sm text-gray-700">
                 <li>
                   <button
                     onClick={handleAddUser}
-                    className="flex items-center gap-2 w-full px-3 py-1.5 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white text-left rounded-md"
+                    className="flex items-center gap-2 w-full px-3 py-1.5 text-sm hover:bg-gray-100 text-left rounded-md"
                   >
                     <FaUserPlus className="text-base" /> Add user
                   </button>
@@ -88,7 +88,7 @@ export default function ListEmployee() {
                 <li>
                   <button
                     onClick={handleDeleteSelected}
-                    className="flex items-center gap-2 w-full px-3 py-1.5 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white text-left rounded-md"
+                    className="flex items-center gap-2 w-full px-3 py-1.5 text-sm hover:bg-gray-100 text-left rounded-md"
                   >
                     <FaRegTrashAlt className="text-base" /> Delete selected
                   </button>
@@ -101,14 +101,14 @@ export default function ListEmployee() {
           <input
             type="text"
             placeholder="Search for users"
-            className="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+            className="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 "
             disabled
           />
         </div>
       </div>
 
-      <table className="w-full text-sm text-gray-500 dark:text-gray-400 text-center">
-        <thead className="text-xs uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+      <table className="w-full text-sm text-gray-500  text-center">
+        <thead className="text-xs uppercase bg-gray-50  ">
           <tr>
             <th className="p-4">
               <input
@@ -127,13 +127,13 @@ export default function ListEmployee() {
         <tbody>
           {employees.length === 0 ? (
             <tr>
-              <td colSpan="6" className="px-6 py-8 text-gray-500 dark:text-gray-300 text-center">
+              <td colSpan="6" className="px-6 py-8 text-gray-500  text-center">
                 No employees found.
               </td>
             </tr>
           ) : (
             employees.map((emp) => (
-              <tr key={emp.user_id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+              <tr key={emp.user_id} className="bg-white border-b hover:bg-gray-50">
                 <td className="p-4">
                   <input
                     type="checkbox"
@@ -141,7 +141,7 @@ export default function ListEmployee() {
                     onChange={() => handleSelect(emp.user_id)}
                   />
                 </td>
-                <th scope="row" className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white text-left">
+                <th scope="row" className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap  text-left">
                   <img className="w-10 h-10 rounded-full" src={emp.avatar || "/default-avatar.png"} alt={emp.name} />
                   <div className="ps-3 text-left">
                     <div className="text-base font-semibold">{emp.name}</div>
@@ -165,7 +165,7 @@ export default function ListEmployee() {
                 </td>
                 <td className="px-6 py-4">{emp.leaveDays?.length || 0}</td>
                 <td className="px-6 py-4">
-                  <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                  <a href="#" className="font-medium text-blue-600 hover:underline">
                     Edit user
                   </a>
                 </td>
